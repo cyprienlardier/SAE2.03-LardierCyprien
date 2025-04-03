@@ -7,7 +7,7 @@ Movie.format = function (movies) {
   let html = "";
   movies.forEach(movie => {
     let movieHtml = template;
-    movieHtml = movieHtml.replace("{{nom}}", movie.name);
+    movieHtml = movieHtml.replace("{{name}}", movie.name);
     movieHtml = movieHtml.replace("{{image}}", movie.image);
 
     html += movieHtml
