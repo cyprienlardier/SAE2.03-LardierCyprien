@@ -31,9 +31,6 @@
 
 .card__title {
   position: absolute;
-  bottom: 16px; /* Positionne le titre à 16px du bas */
-  left: 50%; /* Centre horizontalement le titre */
-  transform: translateX(-50%); /* Ajuste pour un centrage parfait */
   font-size: 1.5em;
   color: #ffffff; /* Couleur du texte */
   transition: color 0.3s ease, transform 0.3s ease; /* Transition fluide */
