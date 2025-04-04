@@ -49,3 +49,41 @@
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); /* Ombre plus sombre */
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transition fluide */
 }
+
+@media (max-width: 768px) {
+  .cards {
+    flex-direction: column; /* Les cartes s'empilent verticalement */
+    padding: 1rem; /* Réduit le padding */
+    align-items: center; /* Centre les cartes */
+  }
+
+  .card {
+    flex: 0 0 auto;
+    height: 30rem;
+    width: 400px;
+    border-radius: 8px;
+    text-align: center;
+    overflow: hidden;
+    display: flex; /* Enable flexbox */
+    flex-direction: column; /* Ensure proper stacking */
+    justify-content: center; /* Centers content vertically */
+    align-items: center; /* Centers content horizontally */
+  }
+  
+
+  .card__title {
+    font-size: 1.2em; /* Ajuste la taille du texte */
+    text-align: center;
+  }
+
+  
+.card__image {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  object-fit: cover;
+  
+}
+}
+
+
