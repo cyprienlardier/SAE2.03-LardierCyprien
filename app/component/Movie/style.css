@@ -1,24 +1,26 @@
 .cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 16px;
-  justify-content: center;
-  gap: 5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
   padding: 2rem;
+  max-width: 100%;
 }
 
 .card {
+  flex: 0 0 auto;
+  width: 300px;
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 16px;
-  max-width: 300px;
   text-align: center;
+  background-color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .card__image {
   width: 100%;
   height: auto;
+  object-fit: contain;
   border-radius: 4px;
 }
 
