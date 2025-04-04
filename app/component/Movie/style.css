@@ -1,31 +1,54 @@
 .cards {
   display: flex;
-  flex-direction: row;
-  gap: 2rem;
   padding: 2rem;
   max-width: 100%;
+  align-items: center;
 }
 
 .card {
   flex: 0 0 auto;
-  width: 300px;
-  border: 1px solid #ccc;
+  height: 30rem;
+  width: 400px;
   border-radius: 8px;
-  padding: 16px;
   text-align: center;
-  background-color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex; /* Enable flexbox */
+  flex-direction: column; /* Ensure proper stacking */
+  justify-content: center; /* Centers content vertically */
+  align-items: center; /* Centers content horizontally */
 }
+
+
+
 
 .card__image {
   width: 100%;
   height: auto;
-  object-fit: contain;
   border-radius: 4px;
+  object-fit: cover;
+  
 }
 
 .card__title {
-  margin-top: 12px;
+  position: absolute;
+  bottom: 16px; /* Positionne le titre à 16px du bas */
+  left: 50%; /* Centre horizontalement le titre */
+  transform: translateX(-50%); /* Ajuste pour un centrage parfait */
   font-size: 1.5em;
-  color: #333;
+  color: #ffffff; /* Couleur du texte */
+  transition: color 0.3s ease, transform 0.3s ease; /* Transition fluide */
+  text-align: center;
+}
+
+
+.card__title:hover {
+  color: #de0000; /* Couleur du texte au survol */
+  transform: scale(1.1); /* Agrandissement du titre au survol */
+}
+
+
+.card:hover {
+  transform: translateY(-5px); /* Déplacement vers le haut */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); /* Ombre plus sombre */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transition fluide */
 }
