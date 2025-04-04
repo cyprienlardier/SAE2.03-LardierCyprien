@@ -1,0 +1,30 @@
+<div class="addMovie"></div>
+    <h4 class="addMovie__title"># Ajouter ou modifier un menu</h4>
+    <form class="addMovie__form">
+
+        <input required type="text" name="titre" placeholder="Saisir un titre" pattern="[^0-9]*"/>
+        <input required type="text" name="realisateur" placeholder="Saisir un réalisateur" pattern="[^0-9]*"/>
+        <input required type="number" name="annee" placeholder="Saisir une année de sortie"/>
+        <input required type="number" name="duree" placeholder="Saisir une durée (en minutes)"/>
+        <input required type="text" name="desc" placeholder="Saisir une description"/>
+        
+        <select name="categorie">
+            <option value="1">Action</option>
+            <option value="2">Comédie</option>
+            <option value="3">Drame</option>
+            <option value="4">Science-fiction</option>
+            <option value="5">Animation</option>
+            <option value="6">Thriller</option>
+            <option value="7">Horreur</option>
+            <option value="8">Aventure</option>
+            <option value="9">Fantaisie</option>
+            <option value="10">Documentaire</option>
+        </select>
+
+        <input required type="text" name="image" placeholder="Nom du fichier de l'image"/>
+        <input required type="text" name="url" placeholder="Saisir l'URL du trailer"/>
+        <input required type="number" name="age" placeholder="Restriction d'âge"/>
+    
+        <input onclick="{{handler}}" type="button" value="Ajouter" name="todo">
+    </form>
+</div>
