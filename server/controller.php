@@ -58,3 +58,13 @@ function addController(){
       return "Erreur lors de l'ajout du film $titre !";
     }
   }
+
+  function readMovieDetailController(){
+    $id = $_REQUEST['id'] ?? null;
+  
+    if (empty($id)) {
+        return "Erreur : Tous les champs doivent être remplis.";
+    }
+  
+    return getMovieDetail($id);
+  }
