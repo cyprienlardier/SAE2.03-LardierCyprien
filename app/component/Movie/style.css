@@ -1,6 +1,6 @@
 .cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);  /* 3 cartes par ligne sur desktop */
+  grid-template-columns: repeat(3, 1fr); 
   gap: 1rem;
   padding: 1rem;
 }
@@ -11,8 +11,8 @@
   border-radius: 8px;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 50rem; /* Réduire la hauteur de la carte */
-  width: 100%; /* Utiliser 100% de la largeur disponible */
+  height: 50rem; 
+  width: 100%; 
 }
 
 .card:hover {
@@ -65,15 +65,15 @@
   opacity: 1;
 }
 
-/* Média query pour tablettes et petits écrans */
+
 @media (max-width: 1024px) {
   .cards {
-    grid-template-columns: repeat(2, 1fr);  /* 2 cartes par ligne sur tablette */
+    grid-template-columns: repeat(2, 1fr);  /
   }
 
   .card {
-    height: 50rem;  /* Ajuster la hauteur des cartes pour tablettes */
-    width: 100%; /* Utiliser 100% de la largeur */
+    height: 50rem;  
+    width: 100%; 
   }
 
   .card__title {
@@ -82,15 +82,14 @@
   }
 }
 
-/* Média query pour mobile (en dessous de 768px) */
 @media (max-width: 768px) {
   .cards {
-    grid-template-columns: 1fr;  /* 1 carte par ligne sur mobile */
-    gap: 1rem;  /* Espace entre les cartes sur mobile */
+    grid-template-columns: 1fr;  
+    gap: 1rem;  
   }
 
   .card {
-    height: 50rem;  /* Ajuster la hauteur des cartes pour mobile */
+    height: 50rem;  
   }
 
   .card__title {
