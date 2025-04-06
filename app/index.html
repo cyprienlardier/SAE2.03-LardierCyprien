@@ -38,11 +38,19 @@
 
         La fonction affiche sur la page la collection de films par défaut
       */
+      // C.getMovie = async function () {
+      //   let data = await DataMovie.requestMovies(); // On récupère les données par défaut et on attend avec await
+      //   V.renderMovie(data); // Affiche les données
+      // };
       C.getMovie = async function () {
-        let data = await DataMovie.requestMovies(); // On récupère les données par défaut et on attend avec await
-        V.renderMovie(data); // Affiche les données
-      };
-
+    let data = await DataMovie.requestMovies(); 
+    console.log(data);  // Ajoute un log pour voir ce que tu reçois
+    if (Array.isArray(data)) {
+        V.renderMovie(data);
+    } else {
+        console.error("Les données ne sont pas un tableau", data);
+    }
+};
       // Vue (contient tout ce qui est relatif à l'affichage)
       window.V = {};
 
