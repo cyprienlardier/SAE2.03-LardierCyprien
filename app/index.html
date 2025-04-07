@@ -55,7 +55,7 @@
 
     C.handlerDetail = async function (id) {
     let data = await DataMovie.requestMovieDetails(id);
-    V.renderMovieDetail(data.movie);
+    V.renderMovieDetail(id);
 };
 
       
