@@ -27,12 +27,8 @@
       window.C = {};
 
      
-      C.handlerDetail = async function (id) {
-       let detail = await DataMovie.requestMovieDetails(id);
-       V.renderMovieDetail(detail); 
-      };
-
-
+    
+    
 
       C.start = function () {
         V.renderNavBar("C.handlerAccueil()");
@@ -49,14 +45,20 @@
       // };
       C.getMovie = async function () {
     let data = await DataMovie.requestMovies(); 
-    console.log(data);  // Ajoute un log pour voir ce que tu reçois
     if (Array.isArray(data)) {
         V.renderMovie(data);
     } else {
         console.error("Les données ne sont pas un tableau", data);
     }
 };
-      // Vue (contient tout ce qui est relatif à l'affichage)
+
+
+    C.handlerDetail = async function (id) {
+    let data = await DataMovie.requestMovieDetails(id);
+    V.renderMovieDetail(data.movie);
+};
+
+      
       window.V = {};
 
       /**
@@ -74,11 +76,13 @@
       V.renderMovie = function (data) {
         let content = document.querySelector("#content");
         content.innerHTML = Movie.format(data);
+        
+
       };
 
       V.renderMovieDetail = function (data) {
         if (!data) return;
-        let content = document.querySelector("#toto");
+        let content = document.querySelector("#content");
         content.innerHTML = MovieDetail.format(data);
       };
 
