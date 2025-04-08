@@ -24,15 +24,17 @@ DataMovie.requestMovieDetails = async function(id) {
     return movieDetails;
   }
 
-  DataMovie.requestMoviecategorie = async function (categorie) {
-    let answer = await fetch(
-      HOST_URL +
-        "/server/script.php?todo=getMovieCategorie&categorie=" +
-        categorie
-    );
-    let movie = await answer.json();
-    return movie;
+  DataMovie.requestCategory = async function () {
+    let answer = await fetch(HOST_URL + "/server/script.php?todo=readcategories" );
+    let data = await answer.json();
+    return data;
   };
+
+  DataMovie.requestMovieCategory = async function (idcategory) {
+    let answer = await fetch(HOST_URL + "/server/script.php?todo=readmoviecategory&id=" +idcategory );
+    let data = await answer.json();
+    return data;
+  };  
   
 
 export {DataMovie};

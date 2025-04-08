@@ -9,7 +9,8 @@
 
   <body>
     <header id="header"></header>
-
+    
+    <section class="" id="movies__body"></section>
     <section class="cards" id="content"></section>
 
     <script type="module">
@@ -19,7 +20,7 @@
       import { DataMovie } from "./data/dataMovie.js";
       import { Movie } from "./component/Movie/script.js";
       import { MovieDetail } from "./component/MovieDetail/script.js";
-      import { MovieCategorie } from "./component/MovieCategorie/script.js";
+      import { MovieCategory } from "./component/MovieCategory/script.js";
 
       // Controleur
       // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
@@ -35,8 +36,8 @@
 
       C.start = function () {
         V.renderNavBar("C.handlerAccueil()");
-        V.renderMovieCategorie();
-        C.readmovies(); // Appelle la fonction pour récupérer les films
+        C.getMovieCategory();
+        // C.readmovies(); // Appelle la fonction pour récupérer les films
       };
 
       /* C.getMovie
@@ -62,10 +63,26 @@
     V.renderMovieDetail(data);
 };
 
-C.handlerCategorie = async function (categorie) {
-        let data = await DataMovie.requestMovieCategorie(categorie);
+C.getMovie = async function () {
+        let data = await DataMovie.request();
+        if (data.length == 0) {
+          data = [
+            {
+              name: "Soon...",
+              image: "Soon...",
+              category: "Soon...",
+            },
+          ];
+        }
         V.renderMovie(data);
       };
+
+      C.getMovieCategory = async function () {
+        let categories = await DataMovie.requestCategory();
+        let html = await MovieCategory.formatMany(categories);
+        V.renderMovieCategory(html);
+      };
+
       
       window.V = {};
 
@@ -89,15 +106,13 @@ C.handlerCategorie = async function (categorie) {
       };
 
       V.renderMovieDetail = function (data) {
-        if (!data) return;
         let content = document.querySelector("#content");
         content.innerHTML = MovieDetail.format(data);
       };
 
-      V.renderMovieCategorie = async function () {
-        let container = document.querySelector(".categorie");
-        let categories = await DataMovie.requestCategories();
-        container.innerHTML = Moviecategorie.format(categories);
+         V.renderMovieCategory =  function (html) {
+        let content = document.querySelector("#content");
+        content.innerHTML = html;
       };
 
 

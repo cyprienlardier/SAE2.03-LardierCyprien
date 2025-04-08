@@ -69,16 +69,28 @@ function addController(){
     return getMovieDetail($id);
   }
 
-  function readMovieCategorieController() {
-    $id_category = $_REQUEST['id_categorie'] ?? null;
-
-    if (empty($id_categorie)) {
-        http_response_code(400); 
-        echo json_encode(["success" => false, "message" => "ID catégorie manquant"]);
-        return false;
+  function readCategoriesController() {
+    // Récupération des catégories
+    $categories = getCategories();
+    if ($categories !=0) {
+        return $categories;
     }
-
-    $movie = readMovieCategorie($id_categorie);
-    return $movie;
+    else{
+        return "Erreur lors de la récupération des films de la catégorie $category";
+     };
 }
 
+
+
+function readMovieCategoryController(){
+    // Récupération des paramètres de la requête
+    $id = $_REQUEST["id"];
+    $movies = getMovieCategory($id);
+
+    if ($movies !=0) {
+        return $movies ;
+    }
+    else{
+       return "Erreur lors de la récupération des films de la catégorie $category";
+    };
+} 

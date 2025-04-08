@@ -69,17 +69,28 @@ function addMovie($titre, $real, $annee, $duree, $des, $cat, $img, $url, $age) {
 
 
 
-    function readMovieCategorie($categorie){
-
+    function getCategories(){
         $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-        $sql = "SELECT Movie.id, Movie.name, image 
-                FROM Movie 
-                INNER JOIN Category ON Movie.id_category = Category.id 
-                WHERE LOWER(Category.name) = LOWER(:categorie)";
-    
+        $sql = "SELECT id, name FROM Category";
         $stmt = $cnx->prepare($sql);
-        $stmt->bindParam(':categorie', $categorie   , PDO::PARAM_STR);
-        $stmt->execute(); 
+        $stmt->execute();
         $res = $stmt->fetchAll(PDO::FETCH_OBJ);
-        return $res;
+        return $res; 
+    }
+    
+    function getMovieCategory($category){
+       
+        if (empty($category)) {
+            return false;
+        }
+        $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+        $sql = "SELECT Movie.id, Movie.name, Movie.year, Movie.length, Movie.description, Movie.director, 
+                Movie.image, Movie.trailer, Movie.min_age, Category.id AS category_id ,Category.name AS category
+                FROM Movie JOIN Category ON Movie.id_category = Category.id 
+                WHERE Category.id = :category";
+        $stmt = $cnx->prepare($sql);
+        $stmt->bindParam(':category', $category);
+        $stmt->execute();
+        $res = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $res; 
     }
