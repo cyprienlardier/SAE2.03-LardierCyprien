@@ -9,3 +9,6 @@
 @import "../component/MovieDetail/style.css" layer(components);
 
 
+body{
+    background-color: black;
+}
