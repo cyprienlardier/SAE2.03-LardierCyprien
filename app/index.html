@@ -16,7 +16,6 @@
     <script type="module">
       // Importation de la NavBar
       import { NavBar } from "./component/NavBar/script.js";
-
       import { DataMovie } from "./data/dataMovie.js";
       import { Movie } from "./component/Movie/script.js";
       import { MovieDetail } from "./component/MovieDetail/script.js";
@@ -31,12 +30,15 @@
     C.handlerAccueil = function () {
         // On affiche la page d'accueil
         C.readmovies(); // Appelle la fonction pour récupérer les films
+        C.getMovieCategory()
       };
     
 
       C.start = function () {
         V.renderNavBar("C.handlerAccueil()");
         C.getMovieCategory();
+        
+        
         // C.readmovies(); // Appelle la fonction pour récupérer les films
       };
 

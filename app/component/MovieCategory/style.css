@@ -1,4 +1,8 @@
-
+body {
+    background-color: #ff0000;
+    color: #801616;
+    font-family: 'Arial', sans-serif;
+}
 .movie-categories {
     width: 100%;
     margin-bottom: 60px;
@@ -8,6 +12,7 @@
     box-shadow: 0 8px 20px rgba(123, 146, 142, 0.4);
     box-sizing: border-box;
     transition: transform 0.3s ease;
+    background-color: #ff0000;
 }
 
 .movie-categories:hover {
