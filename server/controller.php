@@ -68,3 +68,17 @@ function addController(){
   
     return getMovieDetail($id);
   }
+
+  function readMovieCategorieController() {
+    $id_category = $_REQUEST['id_categorie'] ?? null;
+
+    if (empty($id_categorie)) {
+        http_response_code(400); 
+        echo json_encode(["success" => false, "message" => "ID catégorie manquant"]);
+        return false;
+    }
+
+    $movie = readMovieCategorie($id_categorie);
+    return $movie;
+}
+
