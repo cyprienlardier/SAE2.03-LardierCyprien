@@ -1,18 +1,14 @@
-body {
-    background-color: #ff0000;
-    color: #801616;
-    font-family: 'Arial', sans-serif;
-}
+
 .movie-categories {
     width: 100%;
     margin-bottom: 60px;
     padding: 30px 20px;
     border-radius: 16px;
-    background: linear-gradient(145deg, #ff0000, #1e1e1e);
+    
     box-shadow: 0 8px 20px rgba(123, 146, 142, 0.4);
     box-sizing: border-box;
     transition: transform 0.3s ease;
-    background-color: #ff0000;
+    
 }
 
 .movie-categories:hover {

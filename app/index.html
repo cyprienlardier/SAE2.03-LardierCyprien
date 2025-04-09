@@ -10,7 +10,7 @@
   <body>
     <header id="header"></header>
     
-    <section class="" id="movies__body"></section>
+    
     <section class="cards" id="content"></section>
 
     <script type="module">
@@ -53,6 +53,7 @@
       C.readmovies = async function () {
     let data = await DataMovie.requestMovies(); 
     if (Array.isArray(data)) {
+
         V.renderMovie(data);
     } else {
         console.error("Les données ne sont pas un tableau", data);
@@ -66,7 +67,7 @@
 };
 
 C.getMovie = async function () {
-        let data = await DataMovie.request();
+        let data = await DataMovie.requestMovie();
         if (data.length == 0) {
           data = [
             {

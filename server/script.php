@@ -69,7 +69,7 @@ if ( isset($_REQUEST['todo']) ){
       break;
 
       case 'getMovieDetail':
-        $data = readMovieDetailController();
+        $data = readMovieDetailsController();
         break; 
 
         case 'readcategories' :

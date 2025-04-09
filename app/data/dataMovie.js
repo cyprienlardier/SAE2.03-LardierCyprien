@@ -14,12 +14,13 @@ DataMovie.requestMovies = async function(){
     // Ces données (data) sont automatiquement converties en objet JavaScript.
     let movies = await answer.json();
     // Enfin, on retourne ces données.
+    // console.log(movies);
     return movies;
 }
 
 
 DataMovie.requestMovieDetails = async function(id) {
-    let answer = await fetch(HOST_URL + "/server/script.php?todo=getMovieDetail&id=" + id);
+    let answer = await fetch(HOST_URL + "/server/script.php?todo=getMovieDetails&id=" + id);
     let movieDetails = await answer.json();
     return movieDetails;
   }

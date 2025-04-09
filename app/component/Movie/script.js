@@ -6,11 +6,12 @@ let Movie = {};
 
 Movie.format = function(movie) {
   let html = template;
+  
   html = html.replace("{{title}}", movie.name);
-  html = html.replace("{{imgs}}", movie.image);
+  html = html.replace("{{image}}", movie.image);
   html = html.replace(
     "{{handler}}",
-    `C.handlerInfo(${movie.id})`);
+    `C.handlerDetail(${movie.id})`);
   return html;
 };
 

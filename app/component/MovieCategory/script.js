@@ -15,6 +15,9 @@ MovieCategory.format = function(category,movies) {
   
     let html1 = Movie.format(movies );
     html = html.replace("{{movies}}", html1);
+    console.log("category:", category);
+console.log("movies:", movies);
+
     return html
 };
 
