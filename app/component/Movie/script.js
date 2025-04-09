@@ -7,8 +7,13 @@ let Movie = {};
 Movie.format = function(movie) {
   let html = template;
   
-  html = html.replace("{{title}}", movie.name);
-  html = html.replace("{{image}}", movie.image);
+  html = html.replace("{{title}}", movie[0].name);
+  console.log(movie[0].name);
+  // console.log(movie.name);
+  console.log(movie.image);
+  
+
+  html = html.replace("{{image}}", movie[0].image);
   html = html.replace(
     "{{handler}}",
     `C.handlerDetail(${movie.id})`);
