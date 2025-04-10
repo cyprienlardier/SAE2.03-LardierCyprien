@@ -59,7 +59,7 @@ function addController(){
     }
   }
 
-  function readMovieDetailController(){
+  function readMovieDetailsController(){
     $id = $_REQUEST['id'] ?? null;
   
     if (empty($id)) {
