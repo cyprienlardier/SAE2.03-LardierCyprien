@@ -84,6 +84,10 @@ if ( isset($_REQUEST['todo']) ){
               $data =  profilController();
               break;
 
+              case 'readProfil' :
+                $data =  readProfilController();
+                break;
+
 
     default: // il y a un paramètre todo mais sa valeur n'est pas reconnue/supportée
       echo json_encode('[error] Unknown todo value');

@@ -18,6 +18,7 @@
       import { Movie } from "./component/Movie/script.js";
       import { MovieDetail } from "./component/MovieDetail/script.js";
       import { MovieCategory } from "./component/MovieCategory/script.js";
+      import { DataProfil } from "./data/dataProfil.js";
 
       // Controleur
       // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
@@ -32,8 +33,9 @@
       };
     
 
-      C.start = function () {
-        V.renderNavBar("C.handlerAccueil()");
+      C.start = async function () {
+        let profils = await DataProfil.requestProfil();
+        V.renderNavBar("C.handlerAccueil()", "C.handlerProfil()", profils);
         C.getMovieCategory();
         
         
