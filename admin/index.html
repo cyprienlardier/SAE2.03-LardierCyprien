@@ -9,12 +9,14 @@
   <body>
     <section id="log"></section>
     <section id="addMovie"></section>
+    <section id="form"></section>
 
     <script type="module">
       import { Log } from "./component/Log/script.js";
-
       import {Form} from './component/Form/script.js';
       import {DataMovie} from './data/dataMovie.js';
+      import { ProfilForm } from "./component/ProfilForm/script.js";
+      import {DataProfil} from "./data/dataProfil.js";
 
 
       window.C = {};
@@ -32,10 +34,35 @@
           V.renderLog(res);
       }
 
+      C.handlerAddProfil = async function () {
+    let form = document.querySelector(".addProfil__form");
+    let fd = new FormData(form);
+    let isEmpty = false;
+    form.querySelectorAll("input").forEach((input) => {
+      if (!input.value.trim()) {
+        isEmpty = true;
+      }
+    });
+    if (isEmpty) {
+      V.renderLog("Veuillez remplir tous les champs");
+      return;
+    }
+    let res = await DataProfil.addProfil(fd);
+    if (res.success){
+      V.renderLog("Le profil a été ajouté avec succès");
+    } else {
+      V.renderLog("Erreur lors de l'ajout du profil");
+    }
+};
+
+
+
+
       C.start = function () {
         V.renderLog("Démarrage de l'application");
         V.renderMovie("C.handlerAdd()");
-      }
+        V.renderProfilForm("C.handlerAddProfil()");
+      };
         
       window.V = {};
 
@@ -48,6 +75,11 @@
         let content = document.querySelector("#addMovie");
         content.innerHTML = Form.format(handler);
       }
+
+      V.renderProfilForm = function (handler) {
+      let content = document.querySelector("#form");
+      content.innerHTML = ProfilForm.format(handler);
+    };
 
       C.start();
     </script>

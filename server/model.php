@@ -94,3 +94,20 @@ function addMovie($titre, $real, $annee, $duree, $des, $cat, $img, $url, $age) {
         $res = $stmt->fetchAll(PDO::FETCH_OBJ);
         return $res; 
     }
+
+
+    function addProfil($nom, $avatar, $age) {
+       
+        $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+        $sql = "INSERT INTO Profil (nom, avatar, age) 
+                VALUES (:nom, :avatar, :age)";
+        $stmt = $cnx->prepare($sql);
+        $stmt->bindParam(':nom', $nom);
+        $stmt->bindParam(':avatar', $avatar);
+        $stmt->bindParam(':age', $age);
+
+        $stmt->execute();
+
+        $res = $stmt->rowCount();
+        return $res;
+    }
