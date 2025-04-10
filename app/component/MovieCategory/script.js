@@ -13,7 +13,7 @@ MovieCategory.format = function(category,movies) {
     let html = template;
     html = html.replace("{{category}}", category);
   
-    let html1 = Movie.format(movies );
+    let html1 = Movie.formatMany(movies );
     html = html.replace("{{movies}}", html1);
     console.log("category:", category);
 console.log("movies:", movies);
@@ -30,6 +30,7 @@ MovieCategory.formatMany = async function(categories){
         continue
       }
       else{
+        console.log(movies);
         html += MovieCategory.format(obj.name, movies);
     }
 }
