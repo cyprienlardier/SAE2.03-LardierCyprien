@@ -32,7 +32,17 @@
         C.getMovieCategory()
       };
     
+      C.handlerProfil = async function () {
+      const selectedOption = document.querySelector("#profil-select").selectedOptions[0];
+      const dob = selectedOption.getAttribute("data-dob");
+      const imageFilename = selectedOption.getAttribute("data-img");
 
+      
+      document.querySelector("#profil-image").src = `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/server/images/${imageFilename}`;
+             
+      const data = await DataMovie.requestMovieCategory();
+      V.renderMovieCategory(data);
+    };
       C.start = async function () {
         let profils = await DataProfil.requestProfil();
         V.renderNavBar("C.handlerAccueil()", "C.handlerProfil()", profils);
@@ -96,10 +106,14 @@ C.getMovie = async function () {
        * Elle sélectionne l'élément HTML avec l'ID "header" et y insère le contenu
        * formaté par le composant NavBar.
        */
-      V.renderNavBar = function (hAccueil) {
+       V.renderNavBar = function (handlerAccueil, handlerProfil, profils) {
         let header = document.querySelector("#header");
-        header.innerHTML = NavBar.format(hAccueil);
+        header.innerHTML = NavBar.format(handlerAccueil, handlerProfil, profils);
       };
+
+
+      
+  
 
       V.renderMovie = function (data) {
         let content = document.querySelector("#content");
