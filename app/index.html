@@ -44,11 +44,11 @@
         C.userAge = ageutilisateur;
 
         let filteredMovies = await DataMovie.requestMoviesByAge(ageutilisateur);
-        console.log("print"+C);
-        console.log("L'âge de l'utilisateur est : " + C.userAge);
+        V.renderMovie(filteredMovies);
 
         // Chargement des films filtrés par âge
         C.getMovieCategory(); // utilise l'âge stocké dans C.userAge
+
       };
 
       // Démarrage
@@ -110,12 +110,18 @@
 
 
 
-      // Films par catégorie, avec ou sans âge
-      C.getMovieCategory = async function () {
-        let categories = await DataMovie.requestCategory();
-        let html = await MovieCategory.formatMany(categories);
-        V.renderMovieCategory(html);
-      };
+      // // Films par catégorie, avec ou sans âge
+      // C.getMovieCategory = async function () {
+      //   let categories = await DataMovie.requestCategory();
+      //   let html = await MovieCategory.formatMany(categories);
+      //   V.renderMovieCategory(html);
+      // };
+        C.getMovieCategory = async function () {
+    let categories = await DataMovie.requestCategory(C.userAge); // ✅ passe l'âge ici
+    let html = await MovieCategory.formatMany(categories);
+    V.renderMovieCategory(html);
+  };
+
 
       // Vue
       window.V = {};

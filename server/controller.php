@@ -97,8 +97,8 @@ function readControllerMoviesByAge()
 
 function readControllerMoviesAgeCategory()
 {
-  $age = $_REQUEST['age'] ?? null;
-  $categorie = $_REQUEST['categorie'] ?? null;
+  $age = $_REQUEST['ageutilisateur'] ?? null;
+  $categorie = $_REQUEST['category'] ?? null;
 
   if ($age === null || !is_numeric($ageutilisateur) || empty($category)) {
     return false;
