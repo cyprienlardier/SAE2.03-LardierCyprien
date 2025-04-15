@@ -1,3 +1,4 @@
+
 <?php
 /** ARCHITECTURE PHP SERVEUR : Rôle du fichier script.php
  * 

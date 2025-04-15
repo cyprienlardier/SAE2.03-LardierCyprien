@@ -12,7 +12,7 @@
     <section class="cards" id="content"></section>
 
     <script type="module">
-      // Importation de la NavBar
+      // Importation des composants
       import { NavBar } from "./component/NavBar/script.js";
       import { DataMovie } from "./data/dataMovie.js";
       import { Movie } from "./component/Movie/script.js";
@@ -21,105 +21,74 @@
       import { DataProfil } from "./data/dataProfil.js";
 
       // Controleur
-      // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
-      // Une fois l'application terminée, on pourrait remettre let C.
       window.C = {};
+      C.userAge = null;
 
-     
-    C.handlerAccueil = function () {
-        // On affiche la page d'accueil
-        C.readmovies(); // Appelle la fonction pour récupérer les films
-        C.getMovieCategory()
+      // Fonction pour afficher la page d'accueil
+      C.handlerAccueil = function () {
+        C.readmovies();
+        C.getMovieCategory();
       };
-    
-      C.handlerProfil = async function () {
-      const selectedOption = document.querySelector("#profil-select").selectedOptions[0];
-      const dob = selectedOption.getAttribute("data-dob");
-      const imageFilename = selectedOption.getAttribute("data-img");
 
-      
-      document.querySelector("#profil-image").src = `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/server/images/${imageFilename}`;
-             
-      const data = await DataMovie.requestMovieCategory();
-      V.renderMovieCategory(data);
-    };
+      // Fonction pour gérer la sélection du profil
+      C.handlerProfil = async function () {
+        const selectedOption = document.querySelector("#profil-select").selectedOptions[0];
+        const imageFilename = selectedOption.getAttribute("data-img");
+        const dob = selectedOption.getAttribute("data-dob"); // <-- c'est l'âge ici
+
+        // Mise à jour de l'image du profil
+        document.querySelector("#profil-image").src = `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/server/images/${imageFilename}`;
+
+        // Conversion de l'attribut en nombre
+        let ageutilisateur = parseInt(dob);
+        C.userAge = ageutilisateur;
+        console.log("print"+C);
+        console.log("L'âge de l'utilisateur est : " + C.userAge);
+
+        // Chargement des films filtrés par âge
+        C.getMovieCategory(); // utilise l'âge stocké dans C.userAge
+      };
+
+      // Démarrage
       C.start = async function () {
         let profils = await DataProfil.requestProfil();
         V.renderNavBar("C.handlerAccueil()", "C.handlerProfil()", profils);
-        C.getMovieCategory();
-        
-        
-        // C.readmovies(); // Appelle la fonction pour récupérer les films
       };
 
-      /* C.getMovie
-
-        La fonction affiche sur la page la collection de films par défaut
-      */
-      // C.getMovie = async function () {
-      //   let data = await DataMovie.requestMovies(); // On récupère les données par défaut et on attend avec await
-      //   V.renderMovie(data); // Affiche les données
-      // };
+      // Lire tous les films (pas filtrés)
       C.readmovies = async function () {
-    let data = await DataMovie.requestMovies(); 
-    if (Array.isArray(data)) {
-
-        V.renderMovie(data);
-    } else {
-        console.error("Les données ne sont pas un tableau", data);
-    }
-};
-
-
-    C.handlerDetail = async function (id) {
-    let data = await DataMovie.requestMovieDetails(id);
-    V.renderMovieDetail(data);
-};
-
-C.getMovie = async function () {
-        let data = await DataMovie.requestMovie();
-        if (data.length == 0) {
-          data = [
-            {
-              name: "Soon...",
-              image: "Soon...",
-              category: "Soon...",
-            },
-          ];
+        let data = await DataMovie.requestMovies();
+        if (Array.isArray(data)) {
+          V.renderMovie(data);
+        } else {
+          console.error("Les données ne sont pas un tableau", data);
         }
-        V.renderMovie(data);
       };
 
+      // Détails d'un film
+      C.handlerDetail = async function (id) {
+        let data = await DataMovie.requestMovieDetails(id);
+        V.renderMovieDetail(data);
+      };
+
+      // Films par catégorie, avec ou sans âge
       C.getMovieCategory = async function () {
         let categories = await DataMovie.requestCategory();
         let html = await MovieCategory.formatMany(categories);
         V.renderMovieCategory(html);
       };
 
-      
+      // Vue
       window.V = {};
 
-      /**
-       * V.renderNavBar
-       *
-       * Cette fonction est responsable de l'affichage de la barre de navigation (NavBar).
-       * Elle sélectionne l'élément HTML avec l'ID "header" et y insère le contenu
-       * formaté par le composant NavBar.
-       */
-       V.renderNavBar = function (handlerAccueil, handlerProfil, profils) {
+      V.renderNavBar = function (handlerAccueil, handlerProfil, profils) {
         let header = document.querySelector("#header");
         header.innerHTML = NavBar.format(handlerAccueil, handlerProfil, profils);
       };
 
-
-      
-  
-
       V.renderMovie = function (data) {
         let content = document.querySelector("#content");
         content.innerHTML = Movie.format(data);
-        
-
       };
 
       V.renderMovieDetail = function (data) {
@@ -127,14 +96,12 @@ C.getMovie = async function () {
         content.innerHTML = MovieDetail.format(data);
       };
 
-         V.renderMovieCategory =  function (html) {
+      V.renderMovieCategory = function (html) {
         let content = document.querySelector("#content");
         content.innerHTML = html;
       };
 
-
-      C.start(); 
+      C.start(); // Lancement de l'app
     </script>
   </body>
 </html>
-<script type="module"></script>

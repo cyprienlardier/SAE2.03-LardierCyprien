@@ -22,18 +22,26 @@ console.log("movies:", movies);
 };
 
 
-MovieCategory.formatMany = async function(categories){
+MovieCategory.formatMany = async function(categories) {
     let html = "";
+    const select = document.getElementById('profile-select');
+    const selectedOption = select ? select.selectedOptions[0] : null;
+    
     for (const obj of categories) {
-      const movies = await DataMovie.requestMovieCategory(obj.id);
-      if (movies.length === 0){
-        continue
+      let movies;
+      if (!selectedOption || selectedOption.value === "") {
+        // Si aucun profil n'est sélectionné, afficher tous les films
+        movies = await DataMovie.requestMovieCategory(obj.id, null);
+      } else {
+        // Si un profil est sélectionné, utiliser ageutilisateur
+        const ageutilisateur = selectedOption.getAttribute('data-dob');
+        movies = await DataMovie.requestMovieCategory(obj.id, ageutilisateur);
       }
-      else{
-        console.log(movies);
+      
+      if (Array.isArray(movies) && movies.length > 0) {
         html += MovieCategory.format(obj.name, movies);
+      }
     }
-}
     return html;
   };
 

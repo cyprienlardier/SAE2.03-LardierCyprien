@@ -5,118 +5,110 @@
  * mettre à jour, supprimer ou récupérer des données.
  */
 
-/**
- * Définition des constantes de connexion à la base de données.
- *
- * HOST : Nom d'hôte du serveur de base de données, ici "localhost".
- * DBNAME : Nom de la base de données
- * DBLOGIN : Nom d'utilisateur pour se connecter à la base de données.
- * DBPWD : Mot de passe pour se connecter à la base de données.
- */
 define("HOST", "localhost");
 define("DBNAME", "lardier6");
 define("DBLOGIN", "lardier6");
 define("DBPWD", "lardier6");
 
-
-function getAllMovies(){
-        // Connexion à la base de données
-        $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-        // Requête SQL pour récupérer le menu avec des paramètres
-        $sql = "select id, name, image from Movie";
-        // Prépare la requête SQL
-        $stmt = $cnx->prepare($sql);
-        // Exécute la requête SQL
-        $stmt->execute();
-        // Récupère les résultats de la requête sous forme d'objets
-        $res = $stmt->fetchAll(PDO::FETCH_OBJ);
-        return $res; // Retourne les résultats
+// Récupère tous les films
+function getAllMovies() {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT id, name, image FROM Movie";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
 
+// Ajoute ou remplace un film
 function addMovie($titre, $real, $annee, $duree, $des, $cat, $img, $url, $age) {
-        $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
-    
-        $sql = "REPLACE INTO Movie (name, director, year, length, description, id_category, image, trailer, min_age) 
-                VALUES (:titre, :realisateur, :annee, :duree, :desc, :categorie, :image, :url, :age)";
-    
-        $stmt = $cnx->prepare($sql);
-    
-        $stmt->bindParam(':titre', $titre);
-        $stmt->bindParam(':realisateur', $real);
-        $stmt->bindParam(':annee', $annee);
-        $stmt->bindParam(':duree', $duree);
-        $stmt->bindParam(':desc', $des);
-        $stmt->bindParam(':categorie', $cat);
-        $stmt->bindParam(':image', $img);
-        $stmt->bindParam(':url', $url);
-        $stmt->bindParam(':age', $age);
-    
-        $stmt->execute();
-        $res = $stmt->rowCount();
-        return $res; 
-    }
+    $cnx = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME, DBLOGIN, DBPWD);
+    $sql = "REPLACE INTO Movie (name, director, year, length, description, id_category, image, trailer, min_age) 
+            VALUES (:titre, :realisateur, :annee, :duree, :desc, :categorie, :image, :url, :age)";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':titre', $titre);
+    $stmt->bindParam(':realisateur', $real);
+    $stmt->bindParam(':annee', $annee);
+    $stmt->bindParam(':duree', $duree);
+    $stmt->bindParam(':desc', $des);
+    $stmt->bindParam(':categorie', $cat);
+    $stmt->bindParam(':image', $img);
+    $stmt->bindParam(':url', $url);
+    $stmt->bindParam(':age', $age);
+    $stmt->execute();
+    return $stmt->rowCount();
+}
 
-    function getMovieDetail($id){
-        $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-        $sql = "SELECT Movie.id, Movie.name, image, description, director, year, length, Category.name AS category_name, min_age, trailer 
-                FROM Movie INNER JOIN Category ON Movie.id_category = Category.id WHERE Movie.id = :id";
-        $stmt = $cnx->prepare($sql);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        $res = $stmt->fetch(PDO::FETCH_OBJ);
-        return $res;
-    }
+// Récupère le détail d’un film
+function getMovieDetail($id) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT Movie.id, Movie.name, image, description, director, year, length, Category.name AS category_name, min_age, trailer 
+            FROM Movie 
+            INNER JOIN Category ON Movie.id_category = Category.id 
+            WHERE Movie.id = :id";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_OBJ);
+}
 
+// Récupère toutes les catégories
+function getCategories() {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT id, name FROM Category";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
 
+// Récupère tous les films d’une catégorie, avec ou sans filtre d’âge
+function getMovieCategory($category, $ageutilisateur = null) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
 
-    function getCategories(){
-        $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-        $sql = "SELECT id, name FROM Category";
-        $stmt = $cnx->prepare($sql);
-        $stmt->execute();
-        $res = $stmt->fetchAll(PDO::FETCH_OBJ);
-        return $res; 
-    }
-    
-    function getMovieCategory($category){
-       
-        if (empty($category)) {
-            return false;
-        }
-        $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-        $sql = "SELECT Movie.id, Movie.name, Movie.year, Movie.length, Movie.description, Movie.director, 
-                Movie.image, Movie.trailer, Movie.min_age, Category.id AS category_id ,Category.name AS category
-                FROM Movie JOIN Category ON Movie.id_category = Category.id 
-                WHERE Category.id = :category";
+    if ($ageutilisateur === null) {
+        $sql = "SELECT Movie.*, Category.name AS category 
+                FROM Movie 
+                JOIN Category ON Movie.id_category = Category.id 
+                WHERE Category.id = :category
+                ORDER BY Movie.name ASC";
         $stmt = $cnx->prepare($sql);
         $stmt->bindParam(':category', $category);
-        $stmt->execute();
-        $res = $stmt->fetchAll(PDO::FETCH_OBJ);
-        return $res; 
+    } else {
+        $sql = "SELECT Movie.*, Category.name AS category 
+                FROM Movie 
+                JOIN Category ON Movie.id_category = Category.id 
+                WHERE Category.id = :category 
+                AND Movie.min_age <= :ageutilisateur
+                ORDER BY Movie.name ASC";
+        $stmt = $cnx->prepare($sql);
+        $stmt->bindParam(':category', $category);
+        $stmt->bindParam(':ageutilisateur', $ageutilisateur);
     }
 
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
 
-    function addProfil($nom, $avatar, $age) {
+function addProfil($nom, $avatar, $age) {
        
-        $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-        $sql = "INSERT INTO Profil (nom, avatar, age) 
-                VALUES (:nom, :avatar, :age)";
-        $stmt = $cnx->prepare($sql);
-        $stmt->bindParam(':nom', $nom);
-        $stmt->bindParam(':avatar', $avatar);
-        $stmt->bindParam(':age', $age);
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "INSERT INTO Profil (nom, avatar, age) 
+            VALUES (:nom, :avatar, :age)";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':nom', $nom);
+    $stmt->bindParam(':avatar', $avatar);
+    $stmt->bindParam(':age', $age);
 
-        $stmt->execute();
+    $stmt->execute();
 
-        $res = $stmt->rowCount();
-        return $res;
-    }
+    $res = $stmt->rowCount();
+    return $res;
+}
 
-    function getAllProfil(){
-        $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-        $sql = "select id, nom, avatar from Profil";
-        $stmt = $cnx->prepare($sql);
-        $stmt->execute();
-        $res = $stmt->fetchAll(PDO::FETCH_OBJ);
-        return $res; 
-    }
+function getAllProfil(){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "select id, nom, avatar, age from Profil";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    $res = $stmt->fetchAll(PDO::FETCH_OBJ);
+    return $res; 
+}

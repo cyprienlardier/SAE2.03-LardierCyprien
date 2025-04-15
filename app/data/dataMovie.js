@@ -31,11 +31,22 @@ DataMovie.requestMovieDetails = async function(id) {
     return data;
   };
 
-  DataMovie.requestMovieCategory = async function (idcategory) {
-    let answer = await fetch(HOST_URL + "/server/script.php?todo=readmoviecategory&id=" +idcategory );
-    let data = await answer.json();
-    return data;
-  };  
+  // DataMovie.requestMovieCategory = async function (idcategory) {
+  //   let answer = await fetch(HOST_URL + "/server/script.php?todo=readmoviecategory&id=" +idcategory );
+  //   let data = await answer.json();
+  //   return data;
+  // };  
   
+  DataMovie.requestMovieCategory = async function (idCategory, ageutilisateur) {
+    let url = HOST_URL + "/server/script.php?todo=readmoviecategory&id=" + idCategory; 
+    if (ageutilisateur) {
+        url += "&ageutilisateur=" + ageutilisateur;
+    }
+
+    let response = await fetch(url);
+    let data = await response.json();
+    return data;
+};
+
 
 export {DataMovie};
