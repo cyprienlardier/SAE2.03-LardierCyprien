@@ -84,3 +84,25 @@ function readProfilController() {
     $profil = getAllProfil();
     return $profil;
 }
+
+function readControllerMoviesByAge()
+{
+  $ageutilisateur = $_REQUEST['ageutilisateur'] ?? null;
+  if ($ageutilisateur === null || !is_numeric($ageutilisateur)) {
+    return false;
+  }
+
+  return getMoviesByAge((int) $ageutilisateur);
+}
+
+function readControllerMoviesAgeCategory()
+{
+  $age = $_REQUEST['age'] ?? null;
+  $categorie = $_REQUEST['categorie'] ?? null;
+
+  if ($age === null || !is_numeric($ageutilisateur) || empty($category)) {
+    return false;
+  }
+
+  return getMoviesAgeCategory($ageutilisateur, $category);
+}

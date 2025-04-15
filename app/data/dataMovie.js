@@ -48,5 +48,23 @@ DataMovie.requestMovieDetails = async function(id) {
     return data;
 };
 
+DataMovie.requestMoviesByAge = async function (ageutilisateur) {
+  let answer = await fetch(
+    HOST_URL + "/server/script.php?todo=getMoviesByAge&ageutilisateur=" + ageutilisateur
+  );
+  let movies = await answer.json();
+  return movies;
+};
 
+DataMovie.requestMoviesAgeCategory = async function (ageutilisateur, category) {
+  let answer = await fetch(
+    HOST_URL +
+      "/server/script.php?todo=getMoviesAgeCategory&ageutilisateur=" +
+      ageutilisateur +
+      "&category=" +
+      category
+  );
+  let movies = await answer.json();
+  return movies;
+};
 export {DataMovie};

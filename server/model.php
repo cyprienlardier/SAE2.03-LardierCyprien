@@ -112,3 +112,29 @@ function getAllProfil(){
     $res = $stmt->fetchAll(PDO::FETCH_OBJ);
     return $res; 
 }
+
+function getMoviesByAge($ageutilisateur)
+{
+    $cnx = new PDO('mysql:host=' . HOST . ';dbname=' . DBNAME, DBLOGIN, DBPWD);
+    $sql = 'SELECT id, name, image, min_age FROM Movie WHERE min_age <= :age';
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':age', $ageutilisateur, PDO::PARAM_INT);
+    $stmt->execute();
+    $res = $stmt->fetchAll(PDO::FETCH_OBJ);
+    return $res;
+}
+
+function getMoviesAgeCategory($ageutilisateur, $category)
+{
+    $cnx = new PDO('mysql:host=' . HOST . ';dbname=' . DBNAME, DBLOGIN, DBPWD);
+    $sql = 'SELECT Movie.id, Movie.name, Movie.image
+            FROM Movie
+            INNER JOIN Category ON Movie.id_category = Category.id
+            WHERE Movie.min_age <= :age AND LOWER(Category.name) = LOWER(:categorie)';
+
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':age', $ageutilisateur, PDO::PARAM_INT);
+    $stmt->bindParam(':categorie', $category, PDO::PARAM_STR);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}

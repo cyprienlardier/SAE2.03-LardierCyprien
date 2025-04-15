@@ -42,6 +42,8 @@
         // Conversion de l'attribut en nombre
         let ageutilisateur = parseInt(dob);
         C.userAge = ageutilisateur;
+
+        let filteredMovies = await DataMovie.requestMoviesByAge(ageutilisateur);
         console.log("print"+C);
         console.log("L'âge de l'utilisateur est : " + C.userAge);
 
@@ -70,6 +72,43 @@
         let data = await DataMovie.requestMovieDetails(id);
         V.renderMovieDetail(data);
       };
+
+      // C.handlerCategory = async function (category) {
+      //    console.log("Catégory sélectionnée :", category);
+      //    let data = await DataMovie.requestMoviecategory(category);
+      //    if (C.userAge === null) {
+      //      console.warn("Aucun âge utilisateur défini.");
+      //      return;
+      //    }
+ 
+      //    let data = await DataMovie.requestMoviesAgeCategory(
+      //      C.userAge,
+      //      category
+      //    );
+      //    V.renderMovie(data);
+      //  };
+
+          C.handlerCategory = async function (category) {
+      console.log("Catégorie sélectionnée :", category);
+
+      if (C.userAge === null) {
+        console.warn("Aucun âge utilisateur défini.");
+        return;
+      }
+
+      let data = await DataMovie.requestMoviesAgeCategory(C.userAge, category);
+      V.renderMovie(data);
+    };
+
+
+
+
+
+
+
+
+
+
 
       // Films par catégorie, avec ou sans âge
       C.getMovieCategory = async function () {
