@@ -1,0 +1,29 @@
+.movie-categories {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem auto;
+    padding: 2rem;
+    width: 90%; 
+    max-width: 1200px; 
+    background-color: #010e36; 
+    border-radius: 1rem; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    transition: transform 0.3s ease;
+}
+
+.movie-categories__titre {
+    padding-left: 1rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff; 
+    border-left: 4px solid #ffffff; 
+}
+
+.movie-categories__movies {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem; 
+}

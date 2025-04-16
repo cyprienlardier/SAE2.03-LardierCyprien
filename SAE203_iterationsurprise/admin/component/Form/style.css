@@ -1,0 +1,87 @@
+body {
+    background-color: #a09494;
+    font-family: var(--ff-sans);
+    min-height: 100vh;
+    padding: 2rem;
+  }
+  
+
+  
+  .addMovie__title {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #053438; 
+  }
+  
+
+  .addMovie__form input[type="text"],
+  .addMovie__form input[type="number"],
+  .addMovie__form select{
+    width: 100%;
+    padding: 12px;
+    margin: 6px 0;
+    border: 1px solid #333;
+    border-radius: 5px;
+    font-size: 0.9em;
+    background: #222;
+    color: #fff;
+    transition: all 0.3s ease;
+  }
+  
+  .addMovie__form input[type="text"]::placeholder{
+    color: #aaa;
+  }
+  
+  .addMovie__form input[type="text"]:focus ,
+  .addMovie__form input[type="number"]:focus,
+  .addMovie__form select:focus{
+    border-color: #053438;
+    outline: none;
+  }
+  
+  /* Bouton stylé */
+  .addMovie__form input[type="button"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: #053438;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background 0.3s ease;
+  }
+  
+  .addMovie__form input[type="button"]:hover {
+    background: #bfbac8;
+  }
+  
+
+  @media (min-width: 768px) {
+    .addMovie {
+      max-width: 400px;
+      padding: 25px;
+    }
+  
+    .addMovie__title {
+      font-size: 1.5em;
+    }
+  
+    .addMovie__form input[type="text"],
+    .addMovie__form input[type="number"],
+    .addMovie__form select{
+      font-size: 1em;
+      padding: 14px;
+    }
+  
+    .addMovie__form input[type="button"],
+    .addMovie__form input[type="number"],
+    .addMovie__form select{
+      font-size: 1.1em;
+      padding: 14px;
+    }
+  }
+  

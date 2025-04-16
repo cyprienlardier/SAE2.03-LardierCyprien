@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>SAE2.03 ADMIN</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/base.css" />
+  </head>
+  <body>
+    <section id="log"></section>
+    <section id="addMovie"></section>
+    <section id="form"></section>
+
+    <script type="module">
+      import { Log } from "./component/Log/script.js";
+      import {Form} from './component/Form/script.js';
+      import {DataMovie} from './data/dataMovie.js';
+      import { ProfilForm } from "./component/ProfilForm/script.js";
+      import {DataProfil} from "./data/dataProfil.js";
+
+
+      window.C = {};
+
+      
+      C.handlerAdd = async function(){
+        
+        // Sélectionne l'élément possédant la classe `.addMenu__form`
+        // il s'agit de l'élément <form> du composant NewMenuForm
+          let form = document.querySelector('.addMovie__form');
+          let fd = new FormData(form);
+          // Attend la réponse de la fonction `DataMovie.update(fd)`
+          let res = await DataMovie.add(fd);
+          // Affiche le résultat de la mise à jour dans le journal
+          V.renderLog(res);
+      }
+
+      C.handlerAddProfil = async function () {
+    let form = document.querySelector(".addProfil__form");
+    let fd = new FormData(form);
+    let isEmpty = false;
+    form.querySelectorAll("input").forEach((input) => {
+      if (!input.value.trim()) {
+        isEmpty = true;
+      }
+    });
+    if (isEmpty) {
+      V.renderLog("Veuillez remplir tous les champs");
+      return;
+    }
+    let res = await DataProfil.addProfil(fd);
+    if (res.success){
+      V.renderLog("Le profil a été ajouté avec succès");
+    } else {
+      V.renderLog("Erreur lors de l'ajout du profil");
+    }
+};
+
+
+
+
+      C.start = function () {
+        V.renderLog("Démarrage de l'application");
+        V.renderMovie("C.handlerAdd()");
+        V.renderProfilForm("C.handlerAddProfil()");
+      };
+        
+      window.V = {};
+
+      V.renderLog = function(txt) {
+        let content = document.querySelector("#log");
+        content.innerHTML = Log.format(txt);
+      }
+
+      V.renderMovie = function(handler) {
+        let content = document.querySelector("#addMovie");
+        content.innerHTML = Form.format(handler);
+      }
+
+      V.renderProfilForm = function (handler) {
+      let content = document.querySelector("#form");
+      content.innerHTML = ProfilForm.format(handler);
+    };
+
+      C.start();
+    </script>
+  </body>
+</html>

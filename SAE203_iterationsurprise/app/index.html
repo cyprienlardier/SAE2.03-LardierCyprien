@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>SAE2.03 APP</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/base.css" />
+  </head>
+
+  <body>
+    <header id="header"></header>
+    <section class="cards" id="content"></section>
+
+    <script type="module">
+      // Importation des composants
+      import { NavBar } from "./component/NavBar/script.js";
+      import { DataMovie } from "./data/dataMovie.js";
+      import { Movie } from "./component/Movie/script.js";
+      import { MovieDetail } from "./component/MovieDetail/script.js";
+      import { MovieCategory } from "./component/MovieCategory/script.js";
+      import { DataProfil } from "./data/dataProfil.js";
+
+      // Controleur
+      window.C = {};
+      C.userAge = null;
+
+      // Fonction pour afficher la page d'accueil
+      C.handlerAccueil = function () {
+        C.readmovies();
+        C.getMovieCategory();
+      };
+
+      // Fonction pour gérer la sélection du profil
+      C.handlerProfil = async function () {
+        const selectedOption = document.querySelector("#profil-select").selectedOptions[0];
+        const imageFilename = selectedOption.getAttribute("data-img");
+        const dob = selectedOption.getAttribute("data-dob"); // <-- c'est l'âge ici
+
+        // Mise à jour de l'image du profil
+        document.querySelector("#profil-image").src = `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/server/images/${imageFilename}`;
+
+        // Conversion de l'attribut en nombre
+        let ageutilisateur = parseInt(dob);
+        C.userAge = ageutilisateur;
+
+        let filteredMovies = await DataMovie.requestMoviesByAge(ageutilisateur);
+        V.renderMovie(filteredMovies);
+
+        // Chargement des films filtrés par âge
+        C.getMovieCategory(); // utilise l'âge stocké dans C.userAge
+
+      };
+
+      // Démarrage
+      C.start = async function () {
+        let profils = await DataProfil.requestProfil();
+        V.renderNavBar("C.handlerAccueil()", "C.handlerProfil()", profils);
+      };
+
+      // Lire tous les films (pas filtrés)
+      C.readmovies = async function () {
+        let data = await DataMovie.requestMovies();
+        if (Array.isArray(data)) {
+          V.renderMovie(data);
+        } else {
+          console.error("Les données ne sont pas un tableau", data);
+        }
+      };
+
+      // Détails d'un film
+      C.handlerDetail = async function (id) {
+        let data = await DataMovie.requestMovieDetails(id);
+        V.renderMovieDetail(data);
+      };
+
+      // C.handlerCategory = async function (category) {
+      //    console.log("Catégory sélectionnée :", category);
+      //    let data = await DataMovie.requestMoviecategory(category);
+      //    if (C.userAge === null) {
+      //      console.warn("Aucun âge utilisateur défini.");
+      //      return;
+      //    }
+ 
+      //    let data = await DataMovie.requestMoviesAgeCategory(
+      //      C.userAge,
+      //      category
+      //    );
+      //    V.renderMovie(data);
+      //  };
+
+          C.handlerCategory = async function (category) {
+      console.log("Catégorie sélectionnée :", category);
+
+      if (C.userAge === null) {
+        console.warn("Aucun âge utilisateur défini.");
+        return;
+      }
+
+      let data = await DataMovie.requestMoviesAgeCategory(C.userAge, category);
+      V.renderMovie(data);
+    };
+
+
+
+
+
+
+
+
+
+
+
+      // // Films par catégorie, avec ou sans âge
+      // C.getMovieCategory = async function () {
+      //   let categories = await DataMovie.requestCategory();
+      //   let html = await MovieCategory.formatMany(categories);
+      //   V.renderMovieCategory(html);
+      // };
+        C.getMovieCategory = async function () {
+    let categories = await DataMovie.requestCategory(C.userAge); // ✅ passe l'âge ici
+    let html = await MovieCategory.formatMany(categories);
+    V.renderMovieCategory(html);
+  };
+
+
+      // Vue
+      window.V = {};
+
+      V.renderNavBar = function (handlerAccueil, handlerProfil, profils) {
+        let header = document.querySelector("#header");
+        header.innerHTML = NavBar.format(handlerAccueil, handlerProfil, profils);
+      };
+
+      V.renderMovie = function (data) {
+        let content = document.querySelector("#content");
+        content.innerHTML = Movie.format(data);
+      };
+
+      V.renderMovieDetail = function (data) {
+        let content = document.querySelector("#content");
+        content.innerHTML = MovieDetail.format(data);
+      };
+
+      V.renderMovieCategory = function (html) {
+        let content = document.querySelector("#content");
+        content.innerHTML = html;
+      };
+
+      C.start(); // Lancement de l'app
+    </script>
+  </body>
+</html>

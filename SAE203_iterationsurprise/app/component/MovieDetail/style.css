@@ -1,0 +1,135 @@
+.details {
+    background-color: #010e36;
+    color: var(--color-white);
+    padding: 2rem;
+    border-radius: 1rem;
+    max-width: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  }
+  
+  
+  .details__trailer {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: none;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 2rem;
+  }
+  
+  
+  .details__bottom {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  
+  .details__image {
+    object-fit: cover;
+    border-radius: 0.5rem;
+    width: 120px;
+    height: fit-content;
+    gap: 1rem;
+  }
+  
+  
+  .details__infos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .details__info{
+    display: flex;
+    align-items: center;
+  }
+  
+  .details__title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .details__desc,
+  .details__realisateur,
+  .details__annee,
+  .details__duree,
+  .details__categorie,
+  .details__age {
+    font-size: 0.5rem;
+    color: #ccc;
+  }
+  
+  
+  
+  @media (min-width: 768px) {
+    .details {
+      padding: 2rem;
+      max-width: 1000px;
+      margin: 2rem auto;
+      border-radius: 1rem;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+  
+   
+    .details__bottom {
+      display: flex;
+      flex-direction: row;
+      gap: 2rem;
+      align-items: flex-start;
+      margin-bottom: 2rem;
+    }
+  
+    .details__image {
+      width: 250px;
+      height: 35rem;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      gap: 1rem;
+    }
+  
+    .details__infos {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+  
+    .details__title {
+      font-size: 2.2rem;
+      font-weight: bold;
+    }
+  
+    .details__desc {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+  
+    .details__info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+  
+    .details__realisateur,
+    .details__annee,
+    .details__duree,
+    .details__categorie,
+    .details__age {
+      font-size: 1rem;
+      color: #ccc;
+      word-spacing: 0.2rem;
+    }
+  
+ 
+    .details__trailer {
+      display: block;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      aspect-ratio: 16 / 9;
+      border: none;
+      border-radius: 0.5rem;
+    }
+  }
+  
