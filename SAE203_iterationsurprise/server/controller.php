@@ -161,3 +161,10 @@ function removeFavorisController() {
       return ["error" => "Impossible de supprimer le film des favoris."];
   }
 }
+
+
+
+function meaController(){
+    $movies = getMise_en_avant();
+    return $movies;
+  }

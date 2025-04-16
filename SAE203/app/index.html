@@ -9,7 +9,9 @@
 
   <body>
     <header id="header"></header>
+    <section class="mise_en_avant" id="mise_en_avant"></section>
     <section class="cards" id="content"></section>
+    
 
     <script type="module">
       // Importation des composants
@@ -20,6 +22,7 @@
       import { MovieCategory } from "./component/MovieCategory/script.js";
       import { DataProfil } from "./data/dataProfil.js";
       import { Favoris } from "./component/Favoris/script.js";
+      import { FilmMisenavant } from "./component/FilmMisenavant/script.js";
 
       // Controleur
       window.C = {};
@@ -62,10 +65,12 @@
   console.log("Profil sélectionné :", C.profile);
 
   // Mise à jour de l'image du profil
-  document.querySelector("#profil-image").src = `https://mmi.unilim.fr/~onillon4/SAE2.03-mauvais/SAE203/server/images/${C.profile.avatar}`;
+  document.querySelector("#profil-image").src = `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203/server/images/${C.profile.avatar}`;
 
   // Stocker l'âge de l'utilisateur
   C.userAge = C.profile.age;
+
+  await C.getMise_en_avant();
 
   // Charger les films filtrés par âge
   let filteredMovies = await DataMovie.requestMoviesByAge(C.userAge);
@@ -83,6 +88,7 @@
         // Afficher tous les films par défaut
         C.readmovies();
         C.getMovieCategory();
+        C.getMise_en_avant();
       };
 
       // Lire tous les films (pas filtrés)
@@ -159,7 +165,7 @@ C.addFavoris = async function (id_movie) {
   }
 
   let response = await fetch(
-    `https://mmi.unilim.fr/~onillon4/SAE2.03-mauvais/SAE203/server/script.php?todo=addFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
+    `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203/server/script.php?todo=addFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
   );
   let result = await response.json();
 
@@ -179,7 +185,7 @@ C.addFavoris = async function (id_movie) {
 C.removeFavoris = async function (id_movie) {
   console.log("ID du film à supprimer :", id_movie);
   console.log("URL de la requête :", 
-    `https://mmi.unilim.fr/~onillon4/SAE2.03-mauvais/SAE203/server/script.php?todo=removeFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
+    `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203/server/script.php?todo=removeFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
   );
 
   if (!C.profile) {
@@ -188,7 +194,7 @@ C.removeFavoris = async function (id_movie) {
   }
 
   let response = await fetch(
-    `https://mmi.unilim.fr/~onillon4/SAE2.03-mauvais/SAE203/server/script.php?todo=removeFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
+    `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203/server/script.php?todo=removeFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
   );
   let result = await response.json();
 
@@ -217,7 +223,7 @@ C.removeFavoris = async function (id_movie) {
   }
 
   let response = await fetch(
-    `https://mmi.unilim.fr/~onillon4/SAE2.03-mauvais/SAE203/server/script.php?todo=readFavoris&id_profil=${C.profile.id}`
+    `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203/server/script.php?todo=readFavoris&id_profil=${C.profile.id}`
   );
   let favoris = await response.json();
   console.log("Favoris récupérés :", favoris);
@@ -228,6 +234,11 @@ C.removeFavoris = async function (id_movie) {
 };
 
 
+  C.getMise_en_avant = async function () {
+    const age = C.userAge;
+    const data = await DataMovie.requestMovies_mea(age);
+    await V.render_mea(data);
+  };
 
 
 
@@ -253,6 +264,14 @@ C.removeFavoris = async function (id_movie) {
         let content = document.querySelector("#content");
         content.innerHTML = html;
       };
+
+      V.render_mea = async function (data) {
+  let html = await FilmMisenavant.format(data);
+  let container = document.querySelector("#mise_en_avant");
+  container.innerHTML = html;
+};
+
+
 
       C.start(); // Lancement de l'app
     </script>

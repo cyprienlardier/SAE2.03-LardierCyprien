@@ -42,6 +42,10 @@ Movie.formatMany = function (movies, isFavorisPage = false) {
     html += Movie.format(movie, isFavorisPage);
   }
   return html;
+
+
+
+  
 };
 
 export { Movie };

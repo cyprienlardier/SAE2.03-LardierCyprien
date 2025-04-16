@@ -26,13 +26,12 @@ FilmMisenavant.format = async function (movies) {
           <img class="mea__image" src="https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203/server/images/${image}" alt="${name}" />
           <div class="mea__overlay">
             <h3 class="mea__name">${name}</h3>
-            <p class="mea__desc">${description}</p>
           </div>
         </div>
       </div>`;
   }
 
-  return template.replace("{{card}}", card);
+  return template.replace("{{movies}}", card);
 };
 
 export { FilmMisenavant };

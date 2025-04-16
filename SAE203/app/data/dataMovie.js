@@ -91,7 +91,14 @@ DataMovie.removeFavoris = async function (id_profil, id_movie) {
 
   let data = await answer.json();
   return data;
+
 };
 
+
+DataMovie.requestMovies_mea = async function () {
+  let answer = await fetch(HOST_URL + "/server/script.php?todo=getMise_en_avant");
+  let movies = await answer.json();
+  return movies;
+};
 
 export {DataMovie};
