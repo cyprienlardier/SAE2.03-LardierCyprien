@@ -50,18 +50,25 @@ function readCategoriesController() {
     }
 }
 
-function readMovieCategoryController() {
-    $id = $_REQUEST['id'];
-    $ageutilisateur = $_REQUEST['ageutilisateur'];
+    function readMovieCategoryController() {
+        $id = $_REQUEST['id'] ?? null;
+        $ageutilisateur = $_REQUEST['ageutilisateur'] ?? null;
 
-    $movies = getMovieCategory($id, $ageutilisateur);
+        // Sécurité minimale : vérifier que l'ID est bien fourni
+        if (empty($id)) {
+            return "Erreur : ID de catégorie manquant.";
+        }
 
-    if ($movies != 0) {
-        return $movies;
-    } else {
-        return "La catégorie de ces films n'a pas été récupérée";
+        // Filtrage par âge uniquement si un âge est fourni
+        $movies = getMovieCategory($id, $ageutilisateur);
+
+        if ($movies && is_array($movies)) {
+            return $movies;
+        } else {
+            return "Erreur : Aucun film trouvé pour cette catégorie (ou catégorie invalide).";
+        }
     }
-}
+
 
 function profilController(){
     $name = $_REQUEST['name'];
@@ -97,12 +104,12 @@ function readControllerMoviesByAge()
 
 function readControllerMoviesAgeCategory()
 {
-  $age = $_REQUEST['ageutilisateur'] ?? null;
-  $categorie = $_REQUEST['category'] ?? null;
+  $ageutilisateur = $_REQUEST['ageutilisateur'] ?? null;
+  $category = $_REQUEST['category'] ?? null;
 
-  if ($age === null || !is_numeric($ageutilisateur) || empty($category)) {
+  if ($ageutilisateur === null || !is_numeric($ageutilisateur) || empty($category)) {
     return false;
   }
 
-  return getMoviesAgeCategory($ageutilisateur, $category);
+  return getMoviesAgeCategory((int)$ageutilisateur, $category);
 }

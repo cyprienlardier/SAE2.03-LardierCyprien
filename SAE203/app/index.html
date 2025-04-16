@@ -116,11 +116,12 @@
       //   let html = await MovieCategory.formatMany(categories);
       //   V.renderMovieCategory(html);
       // };
-        C.getMovieCategory = async function () {
-    let categories = await DataMovie.requestCategory(C.userAge); // ✅ passe l'âge ici
-    let html = await MovieCategory.formatMany(categories);
+  
+  C.getMovieCategory = async function () {
+    let categories = await DataMovie.requestCategory();
+    let html = await MovieCategory.formatMany(categories, C.userAge); 
     V.renderMovieCategory(html);
-  };
+};
 
 
       // Vue
