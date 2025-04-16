@@ -1,5 +1,8 @@
-
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 /** ARCHITECTURE PHP SERVEUR : Rôle du fichier script.php
  * 
  * Ce fichier est celui à qui on adresse toutes les requêtes HTTP.
@@ -60,6 +63,21 @@ if ( isset($_REQUEST['todo']) ){
   // peut s'écrire aussi avec des if/else
   switch($todo){
 
+    case 'removeFavoris':
+      $data = removeFavorisController();
+    break;
+      
+    case 'addFavoris': 
+      $data = addFavorisController();
+    break;
+        
+    case 'readFavoris':
+      $data = readFavorisController();
+    break;
+
+    case 'updateProfile':
+      $data = updateProfileController();
+    break;
   
     case 'readmovies': 
       $data = readMoviesController(); 
@@ -103,15 +121,6 @@ if ( isset($_REQUEST['todo']) ){
       exit();
   }
 
-  /**
-   * A ce stade, on a appelé la fonction de contrôleur appropriée et stocké le résultat dans la variable $data.
-   * 
-   * On a décidé que si les fonctions de contrôleur échouaient à répondre normalement à la requête HTTP,
-   * elle devait retourner false (par exemple il peut arriver que le serveur de base de données soit down).
-   * C'est un choix qui nous permet de savoir si un problème est survenu et de retourner un message d'erreur.
-   * Si la fonction de contrôleur retourne false, on renvoie une réponse JSON avec un message d'erreur 
-   * et un code de réponse HTTP 500 (Internal error), puis termine l'exécution du script (exit()).
-   */
   if ($data===false){
     echo json_encode('[error] Controller returns false');
     http_response_code(500); // 500 == "Internal error"
@@ -120,11 +129,6 @@ if ( isset($_REQUEST['todo']) ){
 
   error_log("Réponse API : " . json_encode($data));
 
-  /**
-   * Si tout s'est bien passé, on renvoie la réponse HTTP avec les données ($data) retournées
-   * par la fonction de contrôleur et encodées en JSON (json_encode).
-   * On renvoie aussi un code de réponse HTTP 200 (OK) pour indiquer que la requête a été traitée avec succès.
-   */
   echo json_encode($data);
   http_response_code(200); // 200 == "OK"
   exit();

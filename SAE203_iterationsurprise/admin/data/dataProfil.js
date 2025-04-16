@@ -16,4 +16,25 @@ let DataProfil = {};
        
     };
 
+    DataProfil.update = async function (fdata) {
+        let config = {
+            method: "POST",
+            body: fdata,
+        };
+        console.log("Données envoyées :", [...fdata.entries()]); // Ajoutez cette ligne pour déboguer
+        let answer = await fetch(HOST_URL + "/server/script.php?todo=updateProfile", config);
+        let data = await answer.json();
+        console.log("Réponse du serveur :", data); // Ajoutez cette ligne pour déboguer
+        return data;
+    };
+
+    DataProfil.readProfile = async function () {
+        let answer = await fetch(
+            HOST_URL + "/server/script.php?todo=readProfil"
+        );
+        let data = await answer.json();
+        console.log("Profils récupérés :", data); // Vérifiez la réponse du serveur
+        return data;
+    };
+
 export {DataProfil};

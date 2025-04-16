@@ -1,0 +1,85 @@
+.updateProfile__title {
+  font-size: 1.3em;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #053438;
+}
+
+.updateProfile__form select,
+.updateProfile__form input[type="text"],
+.updateProfile__form input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  margin: 6px 0;
+  border: 1px solid #333;
+  border-radius: 5px;
+  font-size: 0.9em;
+  background: #222;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.updateProfile__form select:focus,
+.updateProfile__form input[type="text"]:focus,
+.updateProfile__form input[type="number"]:focus {
+  border-color: #053438;
+  outline: none;
+}
+
+.updateProfile__form input::placeholder {
+  color: #aaa;
+}
+
+.updateProfile__button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background: #053438;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.updateProfile__button:hover {
+  background: #bfbac8;
+}
+
+/* Desktop : côte à côte */
+@media (min-width: 768px) {
+  .addProfil, .updateProfile {
+      max-width: 400px;
+      padding: 25px;
+  }
+
+  .addProfil__title, .updateProfile__title {
+      font-size: 1.5em;
+  }
+
+  .addProfil__form input[type="text"],
+  .addProfil__form input[type="number"],
+  .updateProfile__form select,
+  .updateProfile__form input[type="text"],
+  .updateProfile__form input[type="number"] {
+      font-size: 1em;
+      padding: 14px;
+  }
+
+  .addProfil__form input[type="button"],
+  .updateProfile__button {
+      font-size: 1.1em;
+      padding: 14px;
+  }
+
+  /* Mise en page côte à côte */
+  .form-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 30px;
+      flex-wrap: wrap;
+  }
+}

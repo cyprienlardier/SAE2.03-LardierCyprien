@@ -50,30 +50,37 @@ function readCategoriesController() {
     }
 }
 
-function readMovieCategoryController() {
-    $id = $_REQUEST['id'];
-    $ageutilisateur = $_REQUEST['ageutilisateur'];
+    function readMovieCategoryController() {
+        $id = $_REQUEST['id'] ?? null;
+        $ageutilisateur = $_REQUEST['ageutilisateur'] ?? null;
 
-    $movies = getMovieCategory($id, $ageutilisateur);
+        // Sécurité minimale : vérifier que l'ID est bien fourni
+        if (empty($id)) {
+            return "Erreur : ID de catégorie manquant.";
+        }
 
-    if ($movies != 0) {
-        return $movies;
-    } else {
-        return "La catégorie de ces films n'a pas été récupérée";
+        // Filtrage par âge uniquement si un âge est fourni
+        $movies = getMovieCategory($id, $ageutilisateur);
+
+        if ($movies && is_array($movies)) {
+            return $movies;
+        } else {
+            return "Erreur : Aucun film trouvé pour cette catégorie (ou catégorie invalide).";
+        }
     }
-}
 
-function profilController(){
-    $name = $_REQUEST['name'];
-    $image = $_REQUEST['image'];
-    $ageutilisateur = $_REQUEST['ageutilisateur'];
+
+function profilController() {
+    $name = $_REQUEST['name'] ?? null;
+    $image = $_REQUEST['image'] ?? null;
+    $ageutilisateur = $_REQUEST['ageutilisateur'] ?? null;
 
     if (empty($name) || empty($image) || empty($ageutilisateur)) {
         return "Erreur : Tous les champs doivent être remplis.";
     }
 
     $ok = addProfil($name, $image, $ageutilisateur);
-    if ($ok != 0){
+    if ($ok != 0) {
         return "L'utilisateur $name a été ajouté avec succès !";
     } else {
         return "Erreur lors de l'ajout de l'utilisateur $name !";
@@ -82,6 +89,7 @@ function profilController(){
 
 function readProfilController() {
     $profil = getAllProfil();
+    error_log("Profils récupérés : " . json_encode($profil)); // Ajoutez cette ligne pour déboguer
     return $profil;
 }
 
@@ -97,12 +105,59 @@ function readControllerMoviesByAge()
 
 function readControllerMoviesAgeCategory()
 {
-  $age = $_REQUEST['ageutilisateur'] ?? null;
-  $categorie = $_REQUEST['category'] ?? null;
+  $ageutilisateur = $_REQUEST['ageutilisateur'] ?? null;
+  $category = $_REQUEST['category'] ?? null;
 
-  if ($age === null || !is_numeric($ageutilisateur) || empty($category)) {
+  if ($ageutilisateur === null || !is_numeric($ageutilisateur) || empty($category)) {
     return false;
   }
 
-  return getMoviesAgeCategory($ageutilisateur, $category);
+  return getMoviesAgeCategory((int)$ageutilisateur, $category);
+}
+
+function updateProfileController() {
+    $id = $_REQUEST['id'] ?? null;
+    $name = $_REQUEST['name'] ?? null;
+    $image = $_REQUEST['image'] ?? null; 
+    $age = $_REQUEST['age'] ?? null;
+
+    if (empty($id) || empty($name) || empty($age)) {
+        return "Erreur : Tous les champs obligatoires doivent être remplis.";
+    }
+
+    $ok = updateProfile($name, $image, $age, $id); 
+    return $ok ? "Le profil a été modifié avec succès." : "Erreur lors de la modification du profil.";
+}
+
+function addFavorisController() {
+    $id_profil = $_REQUEST['id_profil'] ?? null;
+    $id_movie = $_REQUEST['id_movie'] ?? null;
+
+    if (isFavoris($id_movie, $id_profil)) {
+        return ["error" => "Ce film est déjà dans les favoris."];
+    }
+
+    $result = addFavoris($id_movie, $id_profil);
+    if ($result) {
+        return ["success" => "Film ajouté aux favoris."];
+    } else {
+        return ["error" => "Impossible d'ajouter le film aux favoris."];
+    }
+}
+
+function readFavorisController() {
+  $id_profil = $_REQUEST['id_profil'] ?? null;
+  $favoris = getFavoris($id_profil);
+  return $favoris ? $favoris : [];
+}
+
+function removeFavorisController() {
+  $id_profil = $_REQUEST['id_profil'] ?? null;
+  $id_movie = $_REQUEST['id_movie'] ?? null;
+  $result = removeFavoris($id_movie, $id_profil);
+  if ($result) {
+      return ["success" => "Film supprimé des favoris."];
+  } else {
+      return ["error" => "Impossible de supprimer le film des favoris."];
+  }
 }

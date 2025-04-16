@@ -1,4 +1,4 @@
-let HOST_URL = "https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203";
+let HOST_URL = "https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203_iterationsurprise";
 
 let DataProfil = {};
 
@@ -14,6 +14,27 @@ let DataProfil = {};
         let response = await fetch(HOST_URL + "/server/script.php?todo=addProfil", config)
         return await response.json();
        
+    };
+
+    DataProfil.update = async function (fdata) {
+        let config = {
+            method: "POST",
+            body: fdata,
+        };
+        console.log("Données envoyées :", [...fdata.entries()]); // Ajoutez cette ligne pour déboguer
+        let answer = await fetch(HOST_URL + "/server/script.php?todo=updateProfile", config);
+        let data = await answer.json();
+        console.log("Réponse du serveur :", data); // Ajoutez cette ligne pour déboguer
+        return data;
+    };
+
+    DataProfil.readProfile = async function () {
+        let answer = await fetch(
+            HOST_URL + "/server/script.php?todo=readProfil"
+        );
+        let data = await answer.json();
+        console.log("Profils récupérés :", data); // Vérifiez la réponse du serveur
+        return data;
     };
 
 export {DataProfil};

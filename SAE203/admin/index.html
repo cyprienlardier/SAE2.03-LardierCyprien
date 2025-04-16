@@ -10,6 +10,7 @@
     <section id="log"></section>
     <section id="addMovie"></section>
     <section id="form"></section>
+    <section id="updateProfile"></section>
 
     <script type="module">
       import { Log } from "./component/Log/script.js";
@@ -17,6 +18,7 @@
       import {DataMovie} from './data/dataMovie.js';
       import { ProfilForm } from "./component/ProfilForm/script.js";
       import {DataProfil} from "./data/dataProfil.js";
+      import {updateProfileForm} from "./component/UpdateProfilForm/script.js";
 
 
       window.C = {};
@@ -55,6 +57,33 @@
     }
 };
 
+      C.handlerUpdateProfile = async function () {
+        console.log("C.handlerUpdateProfile appelé"); // Ajoutez cette ligne pour déboguer
+        let form = document.querySelector(".updateProfile__form");
+        let fd = new FormData(form);
+        console.log("Données du formulaire :", [...fd.entries()]); // Ajoutez cette ligne pour déboguer
+        let res = await DataProfil.update(fd);
+
+        if (res.includes("succès")) {
+            form.reset();
+            location.reload();
+        }
+
+        V.renderLog(res);
+      };
+
+      C.loadProfiles = async function() {
+        let profiles = await DataProfil.readProfile();
+        let optionsHtml = "";
+        for (let i = 0; i < profiles.length; i++) {
+            let profile = profiles[i];
+            optionsHtml += `<option value="${profile.id}">${profile.nom}</option>`; // Utilisez 'nom' au lieu de 'name'
+        }
+        let select = document.querySelector('#profile-select');
+        if (select) {
+            select.innerHTML = optionsHtml;
+        }
+      };
 
 
 
@@ -62,6 +91,8 @@
         V.renderLog("Démarrage de l'application");
         V.renderMovie("C.handlerAdd()");
         V.renderProfilForm("C.handlerAddProfil()");
+        V.renderUpdateProfileForm("C.handlerUpdateProfile()");
+        C.loadProfiles();
       };
         
       window.V = {};
@@ -80,7 +111,13 @@
       let content = document.querySelector("#form");
       content.innerHTML = ProfilForm.format(handler);
     };
-
+    V.renderUpdateProfileForm = function(handler) {
+    console.log("V.renderUpdateProfileForm appelé"); 
+    let content = document.querySelector("#updateProfile");
+    let html = updateProfileForm.format(handler);
+    console.log("HTML généré :", html); // Vérifiez le contenu généré
+    content.innerHTML = html;  
+};
       C.start();
     </script>
   </body>

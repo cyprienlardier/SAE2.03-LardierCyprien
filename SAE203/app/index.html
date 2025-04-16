@@ -19,10 +19,12 @@
       import { MovieDetail } from "./component/MovieDetail/script.js";
       import { MovieCategory } from "./component/MovieCategory/script.js";
       import { DataProfil } from "./data/dataProfil.js";
+      import { Favoris } from "./component/Favoris/script.js";
 
       // Controleur
       window.C = {};
       C.userAge = null;
+      
 
       // Fonction pour afficher la page d'accueil
       C.handlerAccueil = function () {
@@ -30,31 +32,57 @@
         C.getMovieCategory();
       };
 
+      // C.goHome = function () {
+      //    // Affiche "Featured"
+      //   if (C.profile) {
+      //     C.getMovie(C.profile.age); // Affiche les films pour l'âge du profil sélectionné
+      //   } else {
+      //     C.getMovie(); // Affiche les films par défaut
+      //     document.querySelector("#content").innerHTML =
+      //       "<p>Veuillez sélectionner un profil.</p>";
+      //   }
+      // };
+
       // Fonction pour gérer la sélection du profil
       C.handlerProfil = async function () {
-        const selectedOption = document.querySelector("#profil-select").selectedOptions[0];
-        const imageFilename = selectedOption.getAttribute("data-img");
-        const dob = selectedOption.getAttribute("data-dob"); // <-- c'est l'âge ici
+  const selectedOption = document.querySelector("#profil-select").selectedOptions[0];
 
-        // Mise à jour de l'image du profil
-        document.querySelector("#profil-image").src = `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/server/images/${imageFilename}`;
+  if (!selectedOption) {
+    alert("Veuillez sélectionner un profil.");
+    return;
+  }
 
-        // Conversion de l'attribut en nombre
-        let ageutilisateur = parseInt(dob);
-        C.userAge = ageutilisateur;
+  // Définir le profil sélectionné
+  C.profile = {
+    id: selectedOption.value,
+    avatar: selectedOption.getAttribute("data-img"),
+    age: parseInt(selectedOption.getAttribute("data-dob")) // Conversion de l'âge en nombre
+  };
 
-        let filteredMovies = await DataMovie.requestMoviesByAge(ageutilisateur);
-        V.renderMovie(filteredMovies);
+  console.log("Profil sélectionné :", C.profile);
 
-        // Chargement des films filtrés par âge
-        C.getMovieCategory(); // utilise l'âge stocké dans C.userAge
+  // Mise à jour de l'image du profil
+  document.querySelector("#profil-image").src = `https://mmi.unilim.fr/~onillon4/SAE2.03-mauvais/SAE203/server/images/${C.profile.avatar}`;
 
-      };
+  // Stocker l'âge de l'utilisateur
+  C.userAge = C.profile.age;
+
+  // Charger les films filtrés par âge
+  let filteredMovies = await DataMovie.requestMoviesByAge(C.userAge);
+  V.renderMovie(filteredMovies);
+
+  // Charger les catégories de films filtrées par âge
+  C.getMovieCategory();
+};
 
       // Démarrage
       C.start = async function () {
         let profils = await DataProfil.requestProfil();
         V.renderNavBar("C.handlerAccueil()", "C.handlerProfil()", profils);
+
+        // Afficher tous les films par défaut
+        C.readmovies();
+        C.getMovieCategory();
       };
 
       // Lire tous les films (pas filtrés)
@@ -89,7 +117,7 @@
       //  };
 
           C.handlerCategory = async function (category) {
-      console.log("Catégorie sélectionnée :", category);
+      
 
       if (C.userAge === null) {
         console.warn("Aucun âge utilisateur défini.");
@@ -119,9 +147,88 @@
   
   C.getMovieCategory = async function () {
     let categories = await DataMovie.requestCategory();
-    let html = await MovieCategory.formatMany(categories, C.userAge); 
+    let html = await MovieCategory.formatMany(categories, C.userAge || null); 
     V.renderMovieCategory(html);
 };
+
+
+C.addFavoris = async function (id_movie) {
+  if (!C.profile) {
+    alert("Veuillez sélectionner un profil avant d'ajouter un favori.");
+    return;
+  }
+
+  let response = await fetch(
+    `https://mmi.unilim.fr/~onillon4/SAE2.03-mauvais/SAE203/server/script.php?todo=addFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
+  );
+  let result = await response.json();
+
+  if (result.success) {
+    alert("Ajouté aux favoris !");
+    let button = document.querySelector(
+      `button[onclick="C.addFavoris(${id_movie})"]`
+    );
+    if (button) {
+      button.classList.add("is-favoris");
+    }
+  } else {
+    alert(result.error || "Erreur lors de l'ajout aux favoris.");
+  }
+};
+
+C.removeFavoris = async function (id_movie) {
+  console.log("ID du film à supprimer :", id_movie);
+  console.log("URL de la requête :", 
+    `https://mmi.unilim.fr/~onillon4/SAE2.03-mauvais/SAE203/server/script.php?todo=removeFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
+  );
+
+  if (!C.profile) {
+    alert("Veuillez sélectionner un profil avant de supprimer un favori.");
+    return;
+  }
+
+  let response = await fetch(
+    `https://mmi.unilim.fr/~onillon4/SAE2.03-mauvais/SAE203/server/script.php?todo=removeFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
+  );
+  let result = await response.json();
+
+  console.log("Réponse du serveur :", result);
+
+  if (result.success) {
+    alert("Supprimé des favoris !");
+    C.showFavoris();
+  } else {
+    alert(result.error || "Erreur lors de la suppression du favori.");
+  }
+};
+
+
+
+
+
+
+
+
+
+      C.showFavoris = async function () {
+  if (!C.profile) {
+    alert("Veuillez sélectionner un profil.");
+    return;
+  }
+
+  let response = await fetch(
+    `https://mmi.unilim.fr/~onillon4/SAE2.03-mauvais/SAE203/server/script.php?todo=readFavoris&id_profil=${C.profile.id}`
+  );
+  let favoris = await response.json();
+  console.log("Favoris récupérés :", favoris);
+  document.querySelector("#content").innerHTML = 
+    favoris && favoris.length > 0 
+      ? Favoris.format(favoris) 
+      : "<p>Votre liste de favoris est vide.</p>";
+};
+
+
+
 
 
       // Vue

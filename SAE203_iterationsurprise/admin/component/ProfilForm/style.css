@@ -1,0 +1,77 @@
+body {
+    background-color: #a09494;
+    font-family: var(--ff-sans);
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.addProfil__title {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #053438; 
+}
+
+.addProfil__form input[type="text"],
+.addProfil__form input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    margin: 6px 0;
+    border: 1px solid #333;
+    border-radius: 5px;
+    font-size: 0.9em;
+    background: #222;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.addProfil__form input[type="text"]::placeholder,
+.addProfil__form input[type="number"]::placeholder {
+    color: #aaa;
+}
+
+.addProfil__form input[type="text"]:focus,
+.addProfil__form input[type="number"]:focus {
+    border-color: #053438;
+    outline: none;
+}
+
+.addProfil__form input[type="button"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: #053438;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.addProfil__form input[type="button"]:hover {
+    background: #bfbac8;
+}
+
+@media (min-width: 768px) {
+    .addProfil {
+        max-width: 400px;
+        padding: 25px;
+    }
+
+    .addProfil__title {
+        font-size: 1.5em;
+    }
+
+    .addProfil__form input[type="text"],
+    .addProfil__form input[type="number"] {
+        font-size: 1em;
+        padding: 14px;
+    }
+
+    .addProfil__form input[type="button"] {
+        font-size: 1.1em;
+        padding: 14px;
+    }
+}
