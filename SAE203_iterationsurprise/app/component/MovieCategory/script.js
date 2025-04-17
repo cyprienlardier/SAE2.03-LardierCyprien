@@ -4,39 +4,35 @@ import { DataMovie } from "../../data/dataMovie.js";
 let templateFile = await fetch("./component/MovieCategory/template.html");
 let template = await templateFile.text();
 
-
-
-
 let MovieCategory = {};
 
-MovieCategory.format = function(category,movies) {
+// Fonction format correcte
+MovieCategory.format = async function(category, movies) {
     let html = template;
-    html = html.replace("{{category}}", category);
-  
-    let html1 = Movie.formatMany(movies );
-    html = html.replace("{{movies}}", html1);
-    console.log("category:", category);
-console.log("movies:", movies);
+    html = html.replaceAll("{{category}}", category);
 
-    return html
+    const uniqueId = `carousel-${category.replace(/\s+/g, "-").toLowerCase()}`;
+    html = html.replaceAll("{{id}}", uniqueId);
+
+    let html1 = await Movie.formatMany(movies);
+    html = html.replaceAll("{{movies}}", html1);
+
+    return html;
 };
 
-
+// Fonction formatMany correcte
 MovieCategory.formatMany = async function(categories, ageutilisateur = null) {
-  let html = "";
+    let html = "";
 
-  for (const obj of categories) {
-      const movies = await DataMovie.requestMovieCategory(obj.id, ageutilisateur);
+    for (const obj of categories) {
+        const movies = await DataMovie.requestMovieCategory(obj.id, ageutilisateur);
 
-      if (Array.isArray(movies) && movies.length > 0) {
-          html += MovieCategory.format(obj.name, movies);
-      }
-  }
+        if (Array.isArray(movies) && movies.length > 0) {
+            html += await MovieCategory.format(obj.name, movies);
+        }
+    }
 
-  return html;
+    return html;
 };
 
 export { MovieCategory };
-
-
-

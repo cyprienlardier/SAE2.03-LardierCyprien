@@ -1,7 +1,18 @@
-<div class="movie-categories">
+<!-- <div class="movie-categories">
   <h2 class="movie-categories__titre">{{category}}</h2>
   <div class="movie-categories__movies">
     {{movies}}
+  </div>
+</div> -->
+
+<div class="movie-category">
+  <h2 class="movie-category__title">{{category}}</h2>
+  <div class="carousel">
+    <button class="carousel__button carousel__button--left" onclick="C.scrollLeft('{{id}}')">&#8249;</button>
+    <div class="carousel__track" id="{{id}}">
+      {{movies}}
+    </div>
+    <button class="carousel__button carousel__button--right" onclick="C.scrollRight('{{id}}')">&#8250;</button>
   </div>
 </div>
 

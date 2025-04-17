@@ -127,6 +127,27 @@
         }
       };
 
+          C.scrollLeft = function (id) {
+      console.log(`Scrolling left for ID: ${id}`);
+      const track = document.getElementById(id);
+      if (!track) {
+        console.error(`Element with ID '${id}' not found.`);
+        return;
+      }
+      track.scrollBy({ left: -415.008, behavior: "smooth" });
+    };
+
+    C.scrollRight = function (id) {
+      console.log(`Scrolling right for ID: ${id}`);
+      const track = document.getElementById(id);
+      if (!track) {
+        console.error(`Element with ID '${id}' not found.`);
+        return;
+      }
+      track.scrollBy({ left: 415.008, behavior: "smooth" }); 
+    };
+
+
       // Détails d'un film
       C.handlerDetail = async function (id) {
         let data = await DataMovie.requestMovieDetails(id);
