@@ -1,16 +1,12 @@
+let templateFile = await fetch("./component/FilmMisenavant/template.html");
+let template = await templateFile.text();
+
 let FilmMisenavant = {};
 
-async function loadTemplate() {
-  let templateFile = await fetch("./component/FilmMisenavant/template.html");
-  return await templateFile.text();
-}
-
-FilmMisenavant.format = async function (movies) {
+FilmMisenavant.format = function (movies) {
   if (!movies.length) return "";
 
-  let template = await loadTemplate(); 
-  let card = "";
-
+  let cards = "";
   for (let index = 0; index < movies.length; index++) {
     const movie = movies[index];
     const image = movie.image ?? "placeholder.jpg";
@@ -19,20 +15,26 @@ FilmMisenavant.format = async function (movies) {
     const year = movie.year ?? "????";
     const category = movie.category_name ?? "Inconnu";
     const description = movie.description ?? "Aucune description disponible.";
+    const trailer = movie.trailer ?? "Aucune trailer disponible.";
+    cards += `
+    <div class="reco__card" style="background-image: url('../server/images/${image}')">
+      <div class="reco__content">
+        <h3 class="reco__name">${name}</h3>
+        <a class="reco__trailer" href="${trailer}" target="_blank">
 
-    card += `
-      <div class="mea__card" onclick="C.handlerDetail(${movie.id})" style="--i:${index + 1}">
-        <div class="mea__img">
-          <img class="mea__image" src="https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203/server/images/${image}" alt="${name}" />
-          <div class="mea__overlay">
-            <h3 class="mea__name">${name}</h3>
-          </div>
-        </div>
-      </div>`;
+          <span class="reco__trailerbtn">Trailer</span>
+        </a>
+      </div>
+    </div>
+  `;
   }
+  
 
-  return template.replace("{{movies}}", card);
+  return template.replace("{{movies}}", cards);
 };
 
-export { FilmMisenavant };
 
+
+
+
+export { FilmMisenavant };

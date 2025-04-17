@@ -1,0 +1,62 @@
+/* style.css */
+html {
+    font-size: 16px; /* Base : 1rem = 16px */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000000;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 25rem;          
+    padding: 1.25rem;      
+    background: white;
+    border-radius: 0.9375rem; 
+    box-shadow: 0 0 1.25rem rgba(0,0,0,0.6);
+    text-align: center;
+    position: relative;
+    transition: box-shadow 0.4s ease;
+}
+
+.container:hover {
+    box-shadow: 0 0 1.875rem 0.3125rem #00f0ff; 
+}
+
+.container h2 {
+    margin: 0.625rem 0 0.625rem; 
+    color: #000;
+}
+
+.container h3 {
+    margin: 0 0 1.25rem; 
+    color: #666;
+}
+
+.link-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem; 
+}
+
+.link-list a {
+    text-decoration: none;
+    background-color: #111111;
+    color: white;
+    padding: 0.625rem;
+    border-radius: 0.5rem; 
+    transition: all 0.3s ease;
+    box-shadow: 0 0 0 transparent;
+}
+
+.link-list a:hover {
+    background-color: #000000;
+    box-shadow: 0 0 0.9375rem #00f0ff, 0 0 1.5625rem #00f0ff;
+    color: #00f0ff;
+}

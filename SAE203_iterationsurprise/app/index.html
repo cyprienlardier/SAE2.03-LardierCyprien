@@ -28,6 +28,26 @@
       window.C = {};
       C.userAge = null;
       
+      let currentSlide = 0;
+
+
+      C.nextSlide = function () {
+        const slides = document.querySelectorAll(".reco__card");
+        currentSlide = (currentSlide + 1) % slides.length;
+        document.querySelector(
+          ".reco__slider"
+        ).style.transform = `translateX(-${currentSlide * 100}%)`;
+      };
+
+
+      C.prevSlide = function () {
+        const slides = document.querySelectorAll(".reco__card");
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        document.querySelector(
+          ".reco__slider"
+        ).style.transform = `translateX(-${currentSlide * 100}%)`;
+      };
+
 
       // Fonction pour afficher la page d'accueil
       C.handlerAccueil = function () {
@@ -51,9 +71,15 @@
   const selectedOption = document.querySelector("#profil-select").selectedOptions[0];
 
   if (!selectedOption) {
+    document.querySelector("#profil-image").src = "https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203_iterationsurprise/server/images/Default.avif";
     alert("Veuillez sélectionner un profil.");
     return;
-  }
+}
+  if (!selectedOption) {
+    document.querySelector("#profil-image").src = "https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203_iterationsurprise/server/images/default.png";
+    alert("Veuillez sélectionner un profil.");
+    return;
+}
 
   // Définir le profil sélectionné
   C.profile = {
@@ -62,7 +88,7 @@
     age: parseInt(selectedOption.getAttribute("data-dob")) // Conversion de l'âge en nombre
   };
 
-  console.log("Profil sélectionné :", C.profile);
+  
 
   // Mise à jour de l'image du profil
   document.querySelector("#profil-image").src = `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203_iterationsurprise/server/images/${C.profile.avatar}`;
@@ -136,7 +162,11 @@
 
 
 
-
+    C.getMise_en_avant = async function () {
+        const age = C.userAge;
+        const data = await DataMovie.requestMovies_mea(age);
+        V.render_mea(data);
+      };
 
 
 
@@ -266,10 +296,11 @@ C.removeFavoris = async function (id_movie) {
       };
 
       V.render_mea = async function (data) {
-  let html = await FilmMisenavant.format(data);
-  let container = document.querySelector("#mise_en_avant");
-  container.innerHTML = html;
+        const container = document.querySelector("#mise_en_avant");
+        container.innerHTML = FilmMisenavant.format(data);
 };
+
+
 
 
 

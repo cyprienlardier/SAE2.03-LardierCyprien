@@ -1,13 +1,25 @@
 .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.3);  /* semi-transparent noir */
-  backdrop-filter: blur(0.5rem);         /* effet de flou */
-  -webkit-backdrop-filter: blur(0.5rem); /* compatibilité Safari */
-  padding: 0 2rem;
-  height: 4.5rem;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(
+    to bottom,
+    hsla(186, 84%, 4%, 0.9),
+    hsla(186, 84%, 4%, 0.6),
+    hsla(186, 84%, 4%, 0.3),
+    transparent
+  );
+  color: var(--color-fg);
+  font-family: var(--ff-sans);
 }
+
 
 .navbar__list {
   display: flex;
@@ -38,7 +50,7 @@
 }
 
 .navbar__item:hover {
-  color: #0d6efd;
+  color: #999;
 }
 
 .navbar svg {
@@ -58,8 +70,8 @@
 
 .navbar__select {
   background: transparent;
-  border: 0.1rem solid white;
-  color: white;
+  border: 0.1rem solid rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
   padding: 0.3rem 0.7rem;
   border-radius: 0.2rem;
   cursor: pointer;
@@ -67,8 +79,7 @@
 }
 
 .navbar__select option {
-  background: black;
-  color: white;
+  background: transparent;
 }
 
 .navbar__image {
