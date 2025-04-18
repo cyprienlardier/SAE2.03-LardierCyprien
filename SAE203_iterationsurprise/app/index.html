@@ -115,6 +115,7 @@
         C.readmovies();
         C.getMovieCategory();
         C.getMise_en_avant();
+        C.setActiveNavbar("handlerAccueil");
       };
 
       // Lire tous les films (pas filtrés)
@@ -147,6 +148,14 @@
       track.scrollBy({ left: 415.008, behavior: "smooth" }); 
     };
 
+    C.setActiveNavbar = function (label) {
+        const items = document.querySelectorAll(".navbar__item");
+        items.forEach((item) => item.classList.remove("active"));
+        const target = Array.from(items).find(
+          (el) => el.textContent.trim().toLowerCase() === label.toLowerCase()
+        );
+        if (target) target.classList.add("active");
+      };
 
       // Détails d'un film
       C.handlerDetail = async function (id) {
@@ -206,6 +215,9 @@
     let categories = await DataMovie.requestCategory();
     let html = await MovieCategory.formatMany(categories, C.userAge || null); 
     V.renderMovieCategory(html);
+
+
+    C.setActiveNavbar("handlerAccueil");
 };
 
 

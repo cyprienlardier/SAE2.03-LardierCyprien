@@ -1,35 +1,49 @@
 <nav class="navbar font-sans">
-  <div class="navbar__list">
+  <!-- Logo à gauche -->
+  <img
+    class="navbar__logo"
+    src="https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203_iterationsurprise/server/images/Logo.png"
+    alt="Logo"
+    onclick="{{hAbout}}; C.setActiveNavbar('Accueil')"
+  />
 
-    <div class="navbar__logo">
-      <img src="https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203_iterationsurprise/server/images/Logo.png" alt="Logo" class="logo-img" />
+<!-- Burger Menu -->
+<div class="burger" id="burger" onclick="document.body.classList.toggle('nav-open')">
+  <svg width="32" height="32" viewBox="0 0 32 32">
+    <line class="burger__line" x1="2" y1="7" x2="30" y2="7" />
+    <line class="burger__line" x1="2" y1="16" x2="30" y2="16" />
+    <line class="burger__line" x1="2" y1="25" x2="30" y2="25" />
+  </svg>
+</div>
+
+
+  <!-- Menu à droite du logo -->
+  <div class="navbar__menu">
+    <!-- Bloc navigation + recherche -->
+    <div class="navbar__left">
+      <ul class="navbar__list">
+        <li class="navbar__item" onclick="C.handlerAccueil()">Accueil</li>
+        <li class="navbar__item" onclick="C.showFavoris()">Favoris</li>
+        <li class="navbar__item">Tendance</li>
+      </ul>
+      <div class="navbar__search">
+        <input type="text" placeholder="Rechercher..." class="navbar__search-input" />
+      </div>
     </div>
 
-    <ul class="navbar__center">
-      <li class="navbar__item" onclick="C.handlerAccueil()">Accueil</li>
-      <li class="navbar__item" onclick="C.showFavoris()">Favoris</li>
-      <li class="navbar__item">Tendance</li>
-    </ul>
-
-    <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
-      <path d="M10 2a8 8 0 105.29 14.29l4.7 4.7 1.42-1.42-4.7-4.7A8 8 0 0010 2zm0 2a6 6 0 110 12A6 6 0 0110 4z"/>
-    </svg>
-
-    <div class="navbar__profil">
-      <label for="profil-select" class="navbar__label"></label>
+    <!-- Bloc profil -->
+    <div class="navbar__profile">
+      <label class="navbar__label">Profil :</label>
       <select id="profil-select" class="navbar__select" onchange="{{handler}}">
         <option value="" disabled selected>Choisir un profil</option>
         {{profil}}
       </select>
-
       <img
         id="profil-image"
-        class="navbar__image"
+        class="navbar__picture"
         src="https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203_iterationsurprise/server/images/{{avatar}}"
         alt="Photo de profil"
       />
     </div>
-
   </div>
 </nav>
-

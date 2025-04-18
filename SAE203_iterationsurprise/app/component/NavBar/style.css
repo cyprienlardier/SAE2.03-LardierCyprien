@@ -6,8 +6,6 @@
   z-index: 1000;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
   padding: 1rem 2rem;
   background: linear-gradient(
     to bottom,
@@ -18,74 +16,258 @@
   );
   color: var(--color-fg);
   font-family: var(--ff-sans);
-}
-
-
-.navbar__list {
-  display: flex;
-  align-items: center;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-}
-
-.navbar__logo img {
-  height: 2.2rem;
-  margin-right: 2rem;
-}
-
-.navbar__center {
-  display: flex;
+  justify-content: space-between;
   gap: 2rem;
 }
 
+.navbar__logo {
+  height: 2rem;
+}
+
+.burger {
+  display: none; /* Caché par défaut */
+  order: 1;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.navbar__menu {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Nouvelle classe pour grouper nav + search */
+.navbar__left {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navbar__list {
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .navbar__item {
-  color: white;
+  color: var(--color-fg);
   font-weight: 600;
+  font-size: 0.95rem;
   text-transform: uppercase;
   cursor: pointer;
-  font-size: 0.85rem;
   position: relative;
+  padding: 0.5rem 0.75rem;
+  transition: color 0.3s ease;
 }
 
 .navbar__item:hover {
-  color: #999;
+  color: var(--color-yellow-fluo);
 }
 
-.navbar svg {
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-left: 2rem;
-  margin-right: auto;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.navbar__profil {
+.navbar__search {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+}
+
+.navbar__search-input {
+  padding: 0.5rem 1rem;
+  border: 1px solid white;
+  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.navbar__search-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.navbar__profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .navbar__select {
-  background: transparent;
-  border: 0.1rem solid rgb(255, 255, 255);
-  color: rgb(0, 0, 0);
-  padding: 0.3rem 0.7rem;
-  border-radius: 0.2rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: var(--color-yellow-fluo);
+  border-radius: 0.5rem;
+  color: var(--color-black);
+  appearance: none;
   cursor: pointer;
-  font-size: 0.85rem;
+  border: none;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.navbar__select option {
-  background: transparent;
+.navbar__select:hover {
+  background: var(--gradient-button);
 }
 
-.navbar__image {
-  width: 2.2rem;
-  height: 2.2rem;
+.navbar__select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--color-yellow-fluo-rgb), 0.5);
+}
+
+.navbar__picture {
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
+  border: 2px solid var(--color-yellow-fluo);
   object-fit: cover;
-  border: 0.1rem solid white;
+}
+
+.navbar__picture:hover {
+  border: 2px solid var(--color-blue-light);
+}
+
+
+/* --- Version mobile --- */
+@media (max-width: 48rem) {
+
+  .navbar {
+    justify-content: flex-start;
+    padding: 1rem;
+  }
+
+  /* Burger menu positionné à gauche */
+  .burger {
+    display: block;
+    order: 1;
+    cursor: pointer;
+    z-index: 1001;
+    margin-left: 0.5rem;
+  }
+
+  /* Logo collé au menu burger */
+  .navbar__logo {
+    order: 2;
+    margin-left: 0.5rem;
+    height: 2rem;
+  }
+
+  /* Menu burger : fond noir uniquement lorsque ouvert */
+  .navbar__menu {
+    position: fixed;
+    top: 0;
+    left: -100%; /* Menu caché par défaut */
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 1); /* Fond noir total */
+    color: white;
+    padding: 2rem 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+
+  /* Affichage du menu burger lors de l'activation */
+  body.nav-open .navbar__menu {
+    left: 0;
+  }
+
+  /* Barre de recherche décorative */
+  .navbar__search {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .navbar__search-input {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid white;
+    border-radius: 0.5rem;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-size: 1rem;
+    outline: none;
+  }
+
+  .navbar__search-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  /* Choix du profil */
+  .navbar__profile {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 2rem;
+    gap: 1rem;
+  }
+
+  .navbar__label {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: white;
+  }
+
+  .navbar__select {
+    background: transparent;
+    border: 0.1rem solid rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    padding: 0.3rem 0.7rem;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+  }
+
+  .navbar__select:hover {
+    background: var(--gradient-button);
+  }
+
+  .navbar__select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--color-yellow-fluo-rgb), 0.5);
+  }
+
+  /* Menu de navigation */
+  .navbar__list {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 2rem;
+    gap: 1.5rem;
+  }
+
+  .navbar__item {
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    padding: 1rem;
+    transition: color 0.3s ease;
+  }
+
+  .navbar__item:hover {
+    color: var(--color-yellow-fluo);
+  }
+}
+
+/* --- Burger animation --- */
+.burger__line {
+  transition: all 0.4s ease;
+  transform-origin: center;
+  stroke: var(--color-white);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+body.nav-open .burger__line:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+body.nav-open .burger__line:nth-child(2) {
+  opacity: 0;
+}
+body.nav-open .burger__line:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
 }

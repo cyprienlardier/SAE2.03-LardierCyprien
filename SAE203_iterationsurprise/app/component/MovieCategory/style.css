@@ -29,10 +29,10 @@
     overflow-x: auto;
     scroll-behavior: smooth;
     padding: 1rem;
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none; 
 }
 .carousel__track::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
+    display: none; 
 }
 
 .carousel__button {
@@ -64,9 +64,9 @@
     right: 0.5rem; 
 }
 
-/* ✅ Correction pour les cartes de films : */
+
 .movie-card {
     flex: 0 0 auto;
-    min-width: 200px;   /* largeur minimum d'une carte */
-    max-width: 200px;   /* largeur fixe pour aligner proprement */
+    min-width: 200px;   
+    max-width: 200px;   
 }
