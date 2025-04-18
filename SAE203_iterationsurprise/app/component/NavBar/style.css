@@ -158,7 +158,7 @@
     width: 100%;
     height: 100vh;
     background-color: rgba(0, 0, 0, 1); /* Fond noir total */
-    color: white;
+    color: rgb(66, 63, 63);
     padding: 2rem 1rem;
     flex-direction: column;
     align-items: flex-start;

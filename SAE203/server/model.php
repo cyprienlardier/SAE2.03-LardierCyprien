@@ -10,6 +10,11 @@ define("DBNAME", "lardier6");
 define("DBLOGIN", "lardier6");
 define("DBPWD", "lardier6");
 
+// define("HOST", "localhost");
+// define("DBNAME", "SAE203");
+// define("DBLOGIN", "usersae203");
+// define("DBPWD", "Izou@@050914");
+
 // Récupère tous les films
 function getAllMovies() {
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);

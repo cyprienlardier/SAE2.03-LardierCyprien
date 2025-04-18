@@ -24,7 +24,7 @@
   background-position: center;
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Aligner le contenu à gauche */
+  justify-content: flex-start; 
   padding: 2rem;
   color: var(--color-white);
 }
@@ -76,7 +76,7 @@
   text-transform: uppercase;
   text-decoration: none;
   letter-spacing: 0.05rem;
-  background-color: #007bff; /* Bleu */
+  background-color: #007bff;
   padding: 0.6rem 1.2rem;
   border-radius: 0.3rem;
   transition: background-color 0.3s ease, transform 0.2s ease;
@@ -126,6 +126,7 @@
   .reco__content {
     padding: 1rem;
     margin-left: 1rem;
+    margin-top: 7rem; 
   }
 
   .reco__name {

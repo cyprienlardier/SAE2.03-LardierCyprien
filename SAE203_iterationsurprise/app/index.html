@@ -22,6 +22,7 @@
       import { MovieCategory } from "./component/MovieCategory/script.js";
       import { DataProfil } from "./data/dataProfil.js";
       import { Favoris } from "./component/Favoris/script.js";
+      // import { FilmMisenavant } from "./component/FilmMisenavant/script.js";
       import { FilmMisenavant } from "./component/FilmMisenavant/script.js";
 
       // Controleur
@@ -71,12 +72,12 @@
   const selectedOption = document.querySelector("#profil-select").selectedOptions[0];
 
   if (!selectedOption) {
-    document.querySelector("#profil-image").src = "https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203_iterationsurprise/server/images/Default.avif";
+    document.querySelector("#profil-image").src = "../server/images/Default.avif";
     alert("Veuillez sélectionner un profil.");
     return;
 }
   if (!selectedOption) {
-    document.querySelector("#profil-image").src = "https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203_iterationsurprise/server/images/default.png";
+    document.querySelector("#profil-image").src = "../server/images/default.png";
     alert("Veuillez sélectionner un profil.");
     return;
 }
@@ -91,7 +92,7 @@
   
 
   // Mise à jour de l'image du profil
-  document.querySelector("#profil-image").src = `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203_iterationsurprise/server/images/${C.profile.avatar}`;
+  document.querySelector("#profil-image").src = `../server/images/${C.profile.avatar}`;
 
   // Stocker l'âge de l'utilisateur
   C.userAge = C.profile.age;
@@ -228,7 +229,7 @@ C.addFavoris = async function (id_movie) {
   }
 
   let response = await fetch(
-    `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203_iterationsurprise/server/script.php?todo=addFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
+    `../server/script.php?todo=addFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
   );
   let result = await response.json();
 
@@ -248,7 +249,7 @@ C.addFavoris = async function (id_movie) {
 C.removeFavoris = async function (id_movie) {
   console.log("ID du film à supprimer :", id_movie);
   console.log("URL de la requête :", 
-    `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203_iterationsurprise/server/script.php?todo=removeFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
+    `../server/script.php?todo=removeFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
   );
 
   if (!C.profile) {
@@ -257,7 +258,7 @@ C.removeFavoris = async function (id_movie) {
   }
 
   let response = await fetch(
-    `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203_iterationsurprise/server/script.php?todo=removeFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
+    `../server/script.php?todo=removeFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
   );
   let result = await response.json();
 
@@ -286,7 +287,7 @@ C.removeFavoris = async function (id_movie) {
   }
 
   let response = await fetch(
-    `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203/server/script.php?todo=readFavoris&id_profil=${C.profile.id}`
+    `../server/script.php?todo=readFavoris&id_profil=${C.profile.id}`
   );
   let favoris = await response.json();
   console.log("Favoris récupérés :", favoris);

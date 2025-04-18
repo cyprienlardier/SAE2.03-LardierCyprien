@@ -5,10 +5,15 @@
  * mettre à jour, supprimer ou récupérer des données.
  */
 
-define("HOST", "localhost");
-define("DBNAME", "lardier6");
-define("DBLOGIN", "lardier6");
-define("DBPWD", "lardier6");
+ define("HOST", "localhost");
+ define("DBNAME", "SAE203");
+ define("DBLOGIN", "usersae203");
+ define("DBPWD", "Izou@@050914");
+
+//  define("HOST", "localhost");
+//  define("DBNAME", "lardier6");
+//  define("DBLOGIN", "lardier6");
+//  define("DBPWD", "lardier6");
 
 // Récupère tous les films
 function getAllMovies() {

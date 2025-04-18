@@ -1,5 +1,4 @@
-let HOST_URL = "https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203_iterationsurprise";
-
+let HOST_URL = "..";
 let DataProfil = {};
 
     // fetch possède un deuxième paramètre (optionnel) qui est un objet de configuration de la requête HTTP:

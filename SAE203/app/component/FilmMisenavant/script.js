@@ -23,7 +23,7 @@ FilmMisenavant.format = async function (movies) {
     card += `
       <div class="mea__card" onclick="C.handlerDetail(${movie.id})" style="--i:${index + 1}">
         <div class="mea__img">
-          <img class="mea__image" src="https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203/server/images/${image}" alt="${name}" />
+          <img class="mea__image" src="../server/images/${image}" alt="${name}" />
           <div class="mea__overlay">
             <h3 class="mea__name">${name}</h3>
           </div>

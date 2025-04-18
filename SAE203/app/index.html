@@ -65,7 +65,7 @@
   console.log("Profil sélectionné :", C.profile);
 
   // Mise à jour de l'image du profil
-  document.querySelector("#profil-image").src = `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203/server/images/${C.profile.avatar}`;
+  document.querySelector("#profil-image").src = `../server/images/${C.profile.avatar}`;
 
   // Stocker l'âge de l'utilisateur
   C.userAge = C.profile.age;
@@ -165,7 +165,7 @@ C.addFavoris = async function (id_movie) {
   }
 
   let response = await fetch(
-    `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203/server/script.php?todo=addFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
+    `../server/script.php?todo=addFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
   );
   let result = await response.json();
 
@@ -185,7 +185,7 @@ C.addFavoris = async function (id_movie) {
 C.removeFavoris = async function (id_movie) {
   console.log("ID du film à supprimer :", id_movie);
   console.log("URL de la requête :", 
-    `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203/server/script.php?todo=removeFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
+    `../server/script.php?todo=removeFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
   );
 
   if (!C.profile) {
@@ -194,7 +194,7 @@ C.removeFavoris = async function (id_movie) {
   }
 
   let response = await fetch(
-    `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203/server/script.php?todo=removeFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
+    `../server/script.php?todo=removeFavoris&id_profil=${C.profile.id}&id_movie=${id_movie}`
   );
   let result = await response.json();
 
@@ -223,7 +223,7 @@ C.removeFavoris = async function (id_movie) {
   }
 
   let response = await fetch(
-    `https://mmi.unilim.fr/~lardier6/SAE2.03-LardierCyprien/SAE203/server/script.php?todo=readFavoris&id_profil=${C.profile.id}`
+    `../server/script.php?todo=readFavoris&id_profil=${C.profile.id}`
   );
   let favoris = await response.json();
   console.log("Favoris récupérés :", favoris);
