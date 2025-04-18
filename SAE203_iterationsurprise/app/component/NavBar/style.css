@@ -95,15 +95,13 @@
 }
 
 .navbar__select {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  background-color: var(--color-yellow-fluo);
-  border-radius: 0.5rem;
-  color: var(--color-black);
-  appearance: none;
+  background: transparent;
+  border: 0.1rem solid rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.2rem;
   cursor: pointer;
-  border: none;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  font-size: 0.85rem;
 }
 
 .navbar__select:hover {
@@ -186,7 +184,7 @@
     border: 1px solid white;
     border-radius: 0.5rem;
     color: white;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(51, 49, 49, 0.7);
     font-size: 1rem;
     outline: none;
   }
@@ -212,12 +210,12 @@
 
   .navbar__select {
     background: transparent;
-    border: 0.1rem solid rgb(255, 255, 255);
-    color: rgb(0, 0, 0);
-    padding: 0.3rem 0.7rem;
-    border-radius: 0.2rem;
-    cursor: pointer;
-    font-size: 0.85rem;
+  border: 0.1rem solid rgb(44, 41, 41);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  font-size: 0.85rem;
   }
 
   .navbar__select:hover {
